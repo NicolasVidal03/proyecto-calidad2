@@ -47,6 +47,8 @@ describe('CatalogoKata Class', () => {
             const listaOrdenada = catalogo.getLista();
             expect(listaOrdenada[0].getDescripcion()).toBe("Zebra");
             expect(listaOrdenada[1].getDescripcion()).toBe("Águila");
+        });
+    })
 
     describe('buscarPorAuthor method', () => {
         it('should return an empty list when the kata list is empty', () => {
