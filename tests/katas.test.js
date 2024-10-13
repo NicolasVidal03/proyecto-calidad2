@@ -115,5 +115,41 @@ describe('CatalogoKata Class', () => {
             const result = catalogo.buscarPorId(3);
             expect(result).toBeUndefined();
         });  
-    })
+    });
+
+    describe('Ordenar por autor', () => {
+        it('nombreA es menor que nombreB', () => {
+            const nombreA = new Kata("Kata 1", "Angelica");
+            const nombreB = new Kata("Kata 2", "Bernardo");
+
+            catalogo.agregarKata(nombreA);
+            catalogo.agregarKata(nombreB);
+
+            catalogo.ordenarPorAutor();
+
+            expect(catalogo.getLista()[0].getAutor()).toBe("Angelica");
+        });
+        it('nombreA es mayor que nombreB', () => {
+            const nombreA = new Kata("Kata 1", "Romero");
+            const nombreB = new Kata("Kata 2", "Andres");
+
+            catalogo.agregarKata(nombreA);
+            catalogo.agregarKata(nombreB);
+
+            catalogo.ordenarPorAutor();
+
+            expect(catalogo.getLista()[0].getAutor()).toBe("Andres");
+        });
+        it('nombreA es igual a nombreB', () => {
+            const nombreA = new Kata("Kata 1", "Jorge");
+            const nombreB = new Kata("Kata 2", "Jorge");
+
+            catalogo.agregarKata(nombreA);
+            catalogo.agregarKata(nombreB);
+
+            catalogo.ordenarPorAutor();
+
+            expect(catalogo.getLista()[0].getAutor()).toBe("Jorge");
+        });
+    });
 })
