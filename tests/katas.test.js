@@ -131,4 +131,9 @@ describe('mostrarCatalogoKatas method', () => {
         const resultado = catalogo.mostrarCatalogoKatas();
         expect(resultado).toBe(kata1.mostrar() + kata2.mostrar() + kata3.mostrar());
     });
+    it('deberia mostrar vacio en caso de que no hay elementos en el catalogo', () => {
+        const catalogo = new CatalogoKata(); 
+        const resultado = catalogo.mostrarCatalogoKatas();
+        expect(resultado).toBe("");
+    });
 })
