@@ -154,6 +154,19 @@ describe('buscarPorDescripcion method', () => {
         expect(resultado).toContain(kata1);
         expect(resultado).toContain(kata2);
     });
+    it('deberia devolver una array con UNA kata que coincida con la descripción buscada', () => {
+        const catalogo = new CatalogoKata();
+        const kata1 = new Kata("Kata 1", "Belen", "Descripcion", "Facil");
+        const kata2 = new Kata("Kata 2", "Nico", "Descripcion Nico", "Medio");
+        const kata3 = new Kata("Kata 3", "Sebas", "Descripcion Sebas", "Dificil");
+        catalogo.listaKatas.push(kata1);
+        catalogo.listaKatas.push(kata2);
+        catalogo.listaKatas.push(kata3);
+        
+        const resultado = catalogo.buscarPorDescripcion("Descripcion");
+        expect(resultado.length).toBe(1);
+        expect(resultado).toContain(kata1);
+    });
     
 })
 
