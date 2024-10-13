@@ -118,7 +118,7 @@ describe('CatalogoKata Class', () => {
     });
 
     describe('Ordenar por autor', () => {
-        it('nombreA es menor que nombreB', () => {
+        it('nombreA es primero sobre nombreB', () => {
             const nombreA = new Kata("Kata 1", "Angelica");
             const nombreB = new Kata("Kata 2", "Bernardo");
 
@@ -129,7 +129,7 @@ describe('CatalogoKata Class', () => {
 
             expect(catalogo.getLista()[0].getAutor()).toBe("Angelica");
         });
-        it('nombreA es mayor que nombreB', () => {
+        it('nombreA es segundo sobre nombreB', () => {
             const nombreA = new Kata("Kata 1", "Romero");
             const nombreB = new Kata("Kata 2", "Andres");
 
@@ -150,6 +150,27 @@ describe('CatalogoKata Class', () => {
             catalogo.ordenarPorAutor();
 
             expect(catalogo.getLista()[0].getAutor()).toBe("Jorge");
+        });
+    });
+
+    describe('Método clone', () => {
+        it('entra al ciclo for', () => {
+            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            const kata2 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            const kata3 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+
+            catalogo.agregarKata(kata1);
+            catalogo.agregarKata(kata2);
+            catalogo.agregarKata(kata3);
+
+            const catalogo_nuevo = catalogo.clone();
+
+            expect(catalogo).toEqual(catalogo_nuevo)
+        });
+        it('no entra al ciclo for', () => {
+            const catalogo_nuevo = catalogo.clone();
+
+            expect(catalogo_nuevo.getLista()).toEqual([]);
         });
     });
 })
