@@ -156,8 +156,8 @@ describe('CatalogoKata Class', () => {
     describe('Método clone', () => {
         it('entra al ciclo for', () => {
             const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
-            const kata2 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
-            const kata3 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
+            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
 
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata2);
@@ -171,6 +171,36 @@ describe('CatalogoKata Class', () => {
             const catalogo_nuevo = catalogo.clone();
 
             expect(catalogo_nuevo.getLista()).toEqual([]);
+        });
+    });
+
+    describe('Buscar katas por nombre', () => {
+        it('la lista de katas se encuentra con elementos y encuentra coincidencias', () => {
+            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
+            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+
+            catalogo.agregarKata(kata1);
+            catalogo.agregarKata(kata2);
+            catalogo.agregarKata(kata3);
+
+            expect(catalogo.buscarPorNombre('Kata 3')[0]).toEqual(kata3)
+        });
+        it('la lista de katas se encuentra con elementos y no encuentra ninguna coincidencia', () => {
+            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
+            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+
+            catalogo.agregarKata(kata1);
+            catalogo.agregarKata(kata2);
+            catalogo.agregarKata(kata3);
+
+            expect(catalogo.buscarPorNombre('Kata 6')).toEqual([])
+        });
+        it('la lista de katas se encuentra vacía', () => {
+            const catalogo_vacio = new CatalogoKata()
+
+            expect(catalogo_vacio.buscarPorNombre('')).toEqual([])
         });
     });
 })
