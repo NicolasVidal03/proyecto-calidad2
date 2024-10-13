@@ -127,7 +127,7 @@ describe('mostrarCatalogoKatas method', () => {
         catalogo.listaKatas.push(kata1);
         catalogo.listaKatas.push(kata2);
         catalogo.listaKatas.push(kata3);
-        
+
         const resultado = catalogo.mostrarCatalogoKatas();
         expect(resultado).toBe(kata1.mostrar() + kata2.mostrar() + kata3.mostrar());
     });
