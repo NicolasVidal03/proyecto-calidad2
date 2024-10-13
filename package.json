@@ -7,7 +7,7 @@
     "start": "parcel index.html",
     "build": "parcel build index.html",
     "test": "vitest",
-    "test-once": "jest --verbose --coverage",
+    "test-once": "vitest run",
     "cypress": "cypress open",
     "cypress-run": "cypress run",
     "coverage": "vitest --coverage",
