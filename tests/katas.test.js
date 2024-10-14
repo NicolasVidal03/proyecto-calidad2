@@ -266,4 +266,19 @@ describe('CatalogoKata Class', () => {
             expect(catalogo_vacio.buscarPorNombre('')).toEqual([])
         });
     });
+    describe('Método mostrarPuntuacion', () => {
+        it('deberia retornar la puntuacion ingresada previamente', () => {
+            const kata = new Kata();
+            kata.setPuntuacion(5); 
+            
+            const resultado = kata.mostrarPuntuacion();
+            expect(resultado).toBe(5); 
+        });
+        it('deberia retornar "Sin calificar" en caso de que no se le asigne ninguna puntuacion(osea puntuacion sea igual a -1)', () => {
+            const kata = new Kata(); 
+            
+            const resultado = kata.mostrarPuntuacion();
+            expect(resultado).toBe("Sin calificar");
+        });
+    });
 })
