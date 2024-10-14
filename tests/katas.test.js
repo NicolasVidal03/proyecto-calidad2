@@ -274,5 +274,11 @@ describe('CatalogoKata Class', () => {
             const resultado = kata.mostrarPuntuacion();
             expect(resultado).toBe(5); 
         });
+        it('deberia retornar "Sin calificar" en caso de que no se le asigne ninguna puntuacion(osea puntuacion sea igual a -1)', () => {
+            const kata = new Kata(); 
+            
+            const resultado = kata.mostrarPuntuacion();
+            expect(resultado).toBe("Sin calificar");
+        });
     });
 })
