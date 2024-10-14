@@ -127,7 +127,7 @@ describe('mostrarCatalogoKatas method', () => {
         catalogo.listaKatas.push(kata1);
         catalogo.listaKatas.push(kata2);
         catalogo.listaKatas.push(kata3);
-        
+
         const resultado = catalogo.mostrarCatalogoKatas();
         expect(resultado).toBe(kata1.mostrar() + kata2.mostrar() + kata3.mostrar());
     });
@@ -136,6 +136,54 @@ describe('mostrarCatalogoKatas method', () => {
         const resultado = catalogo.mostrarCatalogoKatas();
         expect(resultado).toBe("");
     });
+})
+
+
+describe('buscarPorDescripcion method', () => {
+    it('deberia devolver un array con las katas que coinciden con la descripción buscada', () => {
+        const catalogo = new CatalogoKata();
+        const kata1 = new Kata("Kata 1", "Belen", "Descripcion", "Facil");
+        const kata2 = new Kata("Kata 2", "Nico", "Descripcion", "Medio");
+        const kata3 = new Kata("Kata 3", "Sebas", "Descripcion Sebas", "Dificil");
+        catalogo.listaKatas.push(kata1);
+        catalogo.listaKatas.push(kata2);
+        catalogo.listaKatas.push(kata3);
+
+        const resultado = catalogo.buscarPorDescripcion("Descripcion");
+        expect(resultado.length).toBe(2);
+        expect(resultado).toContain(kata1);
+        expect(resultado).toContain(kata2);
+    });
+    it('deberia devolver una array con UNA kata que coincida con la descripción buscada', () => {
+        const catalogo = new CatalogoKata();
+        const kata1 = new Kata("Kata 1", "Belen", "Descripcion", "Facil");
+        const kata2 = new Kata("Kata 2", "Nico", "Descripcion Nico", "Medio");
+        const kata3 = new Kata("Kata 3", "Sebas", "Descripcion Sebas", "Dificil");
+        catalogo.listaKatas.push(kata1);
+        catalogo.listaKatas.push(kata2);
+        catalogo.listaKatas.push(kata3);
+        
+        const resultado = catalogo.buscarPorDescripcion("Descripcion");
+        expect(resultado.length).toBe(1);
+        expect(resultado).toContain(kata1);
+    });
+    it('deberia devolver un array vacio [] cuando la descripcion no coincida con ninguna kata', () => {
+        const catalogo = new CatalogoKata(); 
+        const kata1 = new Kata("Kata 1", "Belen", "Descripcion Sebas", "Facil");
+        const kata2 = new Kata("Kata 2", "Nico", "Descripcion Nico", "Medio");
+        const kata3 = new Kata("Kata 3", "Sebas", "Descripcion Sebas", "Dificil");
+        catalogo.listaKatas.push(kata1);
+        catalogo.listaKatas.push(kata2);
+        catalogo.listaKatas.push(kata3);
+        
+        const resultado = catalogo.buscarPorDescripcion("Descripcion");
+        expect(resultado.length).toBe(0);
+        expect(resultado).toEqual([]);
+    });
+    
+})
+
+
 
     describe('Ordenar por autor', () => {
         it('nombreA es primero sobre nombreB', () => {
