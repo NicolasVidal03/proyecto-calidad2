@@ -281,4 +281,22 @@ describe('CatalogoKata Class', () => {
             expect(resultado).toBe("Sin calificar");
         });
     });
+    describe('Metodo ordenarPorNombre', () => {
+    
+        it('deberia ordenar correctamente en orden ascendente por nombre', () => {
+            const kata1 = new Kata("Kata A", "Autor 1", "Descripcion 1", "Fácil");
+            const kata2 = new Kata("Kata B", "Autor 2", "Descripcion 2", "Medio");
+            
+            catalogo.agregarKata(kata2);
+            catalogo.agregarKata(kata1);
+    
+            catalogo.ordenarPorNombre();
+            
+            const listaOrdenada = catalogo.getLista();
+            expect(listaOrdenada[0].getNombre()).toBe("Kata A");
+            expect(listaOrdenada[1].getNombre()).toBe("Kata B");
+        });
+    });
+    
+
 })
