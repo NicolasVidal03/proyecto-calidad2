@@ -304,5 +304,27 @@ describe('CatalogoKata Class', () => {
             expect(listaOrdenada[2].getNombre()).toBe("Kata C");
             expect(listaOrdenada[3].getNombre()).toBe("Kata D");
         });
+        
+        it('deberia mantener el mismo orden cuando los nombres son iguales', () => {
+            const kata1 = new Kata("Kata A", "Autor 1", "Descripcion 1", "Facil");
+            const kata2 = new Kata("Kata A", "Autor 2", "Descripcion 2", "Medio");
+            const kata3 = new Kata("Kata A", "Autor 3", "Descripcion 3", "Dificil");
+            const kata4 = new Kata("Kata A", "Autor 4", "Descripcion 4", "Facil");
+            
+            catalogo = new CatalogoKata();
+            catalogo.agregarKata(kata2);
+            catalogo.agregarKata(kata1);
+            catalogo.agregarKata(kata3);
+            catalogo.agregarKata(kata4);
+    
+            catalogo.ordenarPorNombre();
+            
+            const listaOrdenada = catalogo.getLista();
+            expect(listaOrdenada).toStrictEqual([kata2, kata1, kata3, kata4]);
+            expect(listaOrdenada[0].getAutor()).toBe("Autor 2");
+            expect(listaOrdenada[1].getAutor()).toBe("Autor 1");
+            expect(listaOrdenada[2].getAutor()).toBe("Autor 3");
+            expect(listaOrdenada[3].getAutor()).toBe("Autor 4");
+        });
     });
 })
