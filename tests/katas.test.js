@@ -310,7 +310,20 @@ describe('CatalogoKata Class', () => {
             expect(listaOrdenada[0].getNombre()).toBe("Kata A");
             expect(listaOrdenada[0].getNombre()).toBe("Kata A");
         });
-
+    
+        it('debería ordenar correctamente en orden ascendente cuando el primer nombre es mayor que el segundo', () => {
+            const kata1 = new Kata("Kata B", "Autor 1", "Descripcion 1", "Fácil");
+            const kata2 = new Kata("Kata A", "Autor 2", "Descripcion 2", "Medio");
+            
+            catalogo.agregarKata(kata1);
+            catalogo.agregarKata(kata2);
+    
+            catalogo.ordenarPorNombre();
+            
+            const listaOrdenada = catalogo.getLista();
+            expect(listaOrdenada[0].getNombre()).toBe("Kata A");
+            expect(listaOrdenada[1].getNombre()).toBe("Kata B");
+        });
     });
     
 
