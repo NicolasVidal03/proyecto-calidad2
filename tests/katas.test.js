@@ -281,4 +281,29 @@ describe('CatalogoKata Class', () => {
             expect(resultado).toBe("Sin calificar");
         });
     });
+    describe('Metodo getLista', () => {
+        it('deberia retornar la lista completa de katas', () => {
+            const kata = new Kata('Kata 0', 'Autor', 'Descripcion', 'Dificultad');
+            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
+            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+            const kata4 = new Kata('Kata 4', 'Autor', 'Descripcion', 'Dificultad');
+            const kata5 = new Kata('Kata 5', 'Autor', 'Descripcion', 'Dificultad');
+            const kata6 = new Kata('Kata 6', 'Autor', 'Descripcion', 'Dificultad');
+            
+            catalogo = new CatalogoKata();
+            catalogo.agregarKata(kata);
+            catalogo.agregarKata(kata1);
+            catalogo.agregarKata(kata2);
+            catalogo.agregarKata(kata3);
+            catalogo.agregarKata(kata4);
+            catalogo.agregarKata(kata5);
+            catalogo.agregarKata(kata6);
+
+            const listaKatas = catalogo.getLista();
+            expect(listaKatas).toHaveLength(7); 
+            expect(listaKatas).toEqual(expect.arrayContaining([kata, kata1, kata2, kata3, kata4, kata5, kata6]));
+
+        });
+    });
 })
