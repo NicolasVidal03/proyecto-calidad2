@@ -306,4 +306,19 @@ describe('CatalogoKata Class', () => {
 
         });
     });
+
+    describe('Método mostrar', () => {
+        it('Debería mostrar el nombre de la kata y su autor entre divs', () => {
+            const kata = new Kata('Kata 1', 'Roberto Carlos'); 
+            const resultado = kata.mostrar();
+
+            expect(resultado).toBe('<div>Nombre kata: Kata 1, Autor: Roberto Carlos</div>');
+            expect(resultado).not.toBe('Nombre kata: Lata 1, Autor: Roberto Carlos');
+            expect(resultado).contain('<div>')
+            expect(resultado).contain('</div>') 
+            expect(resultado).toMatch(/^<div>.*<\/div>$/);
+            expect(resultado.length).toBeGreaterThan(0);
+            expect(resultado).not.toBeUndefined()
+        });
+    });
 })
