@@ -128,12 +128,17 @@ describe('CatalogoKata Class', () => {
             catalogo.listaKatas.push(kata3);
 
             const resultado = catalogo.mostrarCatalogoKatas();
+            const expectedLength = kata1.mostrar().length + kata2.mostrar().length + kata3.mostrar().length;
             expect(resultado).toBe(kata1.mostrar() + kata2.mostrar() + kata3.mostrar());
+            expect(resultado.length).toBe(expectedLength);
         });
         it('deberia mostrar vacio en caso de que no hay elementos en el catalogo', () => {
             const catalogo = new CatalogoKata(); 
             const resultado = catalogo.mostrarCatalogoKatas();
             expect(resultado).toBe("");
+            expect(resultado).not.toBeNull();
+            expect(resultado).not.toBeUndefined();
+            expect(typeof resultado).toBe("string");
         });
     })
 
