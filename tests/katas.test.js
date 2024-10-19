@@ -292,11 +292,23 @@ describe('CatalogoKata Class', () => {
     });
 
     describe('Método clone', () => {
-        it('entra al ciclo for', () => {
-            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
-            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
-            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+        let kata1;
+        let kata2;
+        let kata3;
 
+        beforeEach(() => {
+            kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
+            kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+        });
+
+        afterEach(() => {
+            kata1 = null;
+            kata2 = null;
+            kata3 = null;
+        });
+
+        it('entra al ciclo for', () => {
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata2);
             catalogo.agregarKata(kata3);
