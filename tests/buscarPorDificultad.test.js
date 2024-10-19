@@ -48,5 +48,21 @@ describe('Archivo buscarPorDificultad.js', () => {
             expect(resultado).toContain(kata3); 
             expect(resultado).toHaveLength(2);
         });
+
+        it('deberia devolver una lista vacía si no hay katas con la dificultad especificada', () => {
+            const kata1 = new Kata('Kata 1', 'Angelica', 'Descripción', 'Media');
+            const kata2 = new Kata('Kata 2', 'Maria', 'Descripción', 'Alta'); 
+
+            catalogo.agregarKata(kata1);
+            catalogo.agregarKata(kata2);
+
+            const resultado = arrayKatasConMismaDificultad(catalogo, 'Baja');
+            const resultadoEsperado = []; 
+
+            expect(resultado).toEqual(resultadoEsperado);
+            expect(resultado).not.toContain(kata1); 
+            expect(resultado).not.toContain(kata2); 
+            expect(resultado).toHaveLength(0); 
+        });
     });
 });
