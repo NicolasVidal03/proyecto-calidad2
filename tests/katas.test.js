@@ -350,4 +350,145 @@ describe('CatalogoKata Class', () => {
             expect(listaOrdenada[3].getNombre()).toBe("Kata D");
         });
     });
+
+    describe('Metodo getLista', () => {
+        it('deberia retornar la lista completa de katas', () => {
+            const kata = new Kata('Kata 0', 'Autor', 'Descripcion', 'Dificultad');
+            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
+            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+            const kata4 = new Kata('Kata 4', 'Autor', 'Descripcion', 'Dificultad');
+            const kata5 = new Kata('Kata 5', 'Autor', 'Descripcion', 'Dificultad');
+            const kata6 = new Kata('Kata 6', 'Autor', 'Descripcion', 'Dificultad');
+            
+            catalogo = new CatalogoKata();
+            catalogo.agregarKata(kata);
+            catalogo.agregarKata(kata1);
+            catalogo.agregarKata(kata2);
+            catalogo.agregarKata(kata3);
+            catalogo.agregarKata(kata4);
+            catalogo.agregarKata(kata5);
+            catalogo.agregarKata(kata6);
+
+            const listaKatas = catalogo.getLista();
+            expect(listaKatas).toHaveLength(7); 
+            expect(listaKatas).toEqual(expect.arrayContaining([kata, kata1, kata2, kata3, kata4, kata5, kata6]));
+
+        });
+    });
+
+    describe('Metodos getters', () => {
+        it('deberia devolver el nombre de la kata', () => {
+            const kata = new Kata('Nombre de Kata');
+            const resultado = kata.getNombre();
+    
+            expect(typeof resultado).toBe('string');
+            expect(resultado).toMatch(/^[a-zA-Z\s]+$/); 
+            expect(resultado.length).toBeGreaterThanOrEqual(0);  
+            expect(resultado.length).toEqual(14);    
+            expect(resultado).not.toBeUndefined();
+            expect(resultado).toBe('Nombre de Kata');
+        });
+
+        it('deberia devolver el nombre del autor de la kata', () => {
+            const kata = new Kata('kata', 'Jose Carlos');
+            const resultado = kata.getAutor();
+    
+            expect(typeof resultado).toBe('string');
+            expect(resultado).toBe('Jose Carlos');
+            expect(resultado).toMatch(/^[a-zA-Z\s]+$/); 
+            expect(resultado.length).toBeGreaterThanOrEqual(0);  
+            expect(resultado.length).toEqual(11);    
+            expect(resultado).not.toBeUndefined();
+        });
+    
+        it('deberia devolver la descripcion de la kata', () => {
+            const kata = new Kata('kata', 'autor', 'Esta es una descripcion');
+            const resultado = kata.getDescripcion();
+
+            expect(typeof resultado).toBe('string');
+            expect(resultado).toBe('Esta es una descripcion');
+            expect(resultado).toMatch(/^[a-zA-Z\s]+$/); 
+            expect(resultado.length).toBeGreaterThanOrEqual(0);  
+            expect(resultado.length).toBeLessThanOrEqual(50)    
+            expect(resultado).not.toBeUndefined();
+        });
+
+        it('deberia devolver una descripcion corta de la kata', () => {
+            const kata = new Kata('kata', 'Jose Carlos', 'Esta es una descripcion larga que debe ser resumida');
+            const resultado = kata.getDescCorta();
+    
+            expect(typeof resultado).toBe('string');
+            expect(resultado).toBe('Esta es una desc...');
+            expect(resultado).toMatch(/^[\s\S]+$/); 
+            expect(resultado.length).toBeGreaterThanOrEqual(0);  
+            expect(resultado.length).toEqual(19);    
+            expect(resultado).not.toBeUndefined();
+        });
+
+        it('deberia devolver la dificultad de la kata', () => {
+            const kata = new Kata('kata', 'Jose Carlos', 'descripcion', 'Media');
+            const resultado = kata.getDificultad();
+    
+            expect(typeof resultado).toBe('string');
+            expect(resultado).toBe('Media');
+            expect(resultado).toMatch(/^[a-zA-Z\s]+$/); 
+            expect(resultado.length).toBeGreaterThanOrEqual(0);  
+            expect(resultado.length).toBeLessThanOrEqual(10)   
+            expect(resultado).not.toBeUndefined();
+        });
+
+        it('deberia devolver el id de la Kata cuando no se encuentra en un catalogo', () => {
+            const kata = new Kata('kata');
+            const resultado = kata.getId();
+    
+            expect(typeof resultado).toBe('number');
+            expect(resultado).toEqual(-1);
+            expect(Number.isInteger(resultado)).toBe(true);
+            expect(Number.isFinite(resultado)).toBe(true);
+            expect(resultado).toBeLessThan(0);
+            expect(resultado).not.toBeUndefined();
+        });
+
+        it('deberia devolver la puntuacion Kata', () => {
+            const kata = new Kata('kata', 'Jose Carlos', 'descripcion', 'Media', 78);
+            const resultado = kata.getPuntuacion();
+    
+            expect(typeof resultado).toBe('number');
+            expect(resultado).toEqual(78);
+            expect(Number.isInteger(resultado)).toBe(true);
+            expect(Number.isFinite(resultado)).toBe(true);
+            expect(resultado).toBeLessThanOrEqual(100);
+            expect(resultado).toBeGreaterThanOrEqual(-1)
+            expect(resultado).not.toBeUndefined();
+        });
+
+        it('deberia devolver el estado de una Kata recien creada', () => {
+            const kata = new Kata('kata');
+            const resultado = kata.getEstado();
+    
+            expect(typeof resultado).toBe('string');
+            expect(resultado).toBe('No Terminado');
+            expect(resultado).toMatch(/^[a-zA-Z\s]+$/); 
+            expect(resultado).toHaveLength(12)   
+            expect(resultado).not.toBeUndefined();
+        });
+    });
+  
+    describe('Método mostrar', () => {
+        it('Debería mostrar el nombre de la kata y su autor entre divs', () => {
+            const kata = new Kata('Kata 1', 'Roberto Carlos'); 
+            const resultado = kata.mostrar();
+
+            expect(resultado).toBe('<div>Nombre kata: Kata 1, Autor: Roberto Carlos</div>');
+            expect(resultado).not.toBe('Nombre kata: Lata 1, Autor: Roberto Carlos');
+            expect(resultado).contain('<div>')
+            expect(resultado).contain('</div>') 
+            expect(resultado).toMatch(/^<div>.*<\/div>$/);
+            expect(resultado.length).toBeGreaterThan(0);
+            expect(resultado).not.toBeUndefined()
+        });
+    });
+
+
 })
