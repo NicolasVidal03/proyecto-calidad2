@@ -506,14 +506,45 @@ describe('CatalogoKata Class', () => {
             
         });
     });
+    
+    describe('Método agregarKata', () => {
+        let kata1;
+        let kata2;
+
+        beforeEach(() => {
+            kata1 = new Kata('Kata 1', 'Rodrigo'); 
+            kata2 = new Kata('Kata 2', 'Pedro');
+        });
+
+        afterEach(() => {
+            kata1 = null;
+            kata2 = null;
+        });
+
+        it('Debería añadir una nueva kata al catalogo ordenada por orden de ingreso', () => {
+            catalogo.agregarKata(kata1)
+            let resultado = catalogo.getLista()
+
+            expect(resultado).toContain(kata1);
+            expect(resultado).toHaveLength(1);
+            expect(resultado).not.toBeUndefined();
+
+            catalogo.agregarKata(kata2);
+            resultado = catalogo.getLista();
+
+            expect(resultado).toContain(kata2);
+            expect(resultado).toHaveLength(2);
+            expect(resultado).toStrictEqual([kata1, kata2])
+            expect(resultado).not.toBeUndefined();
+        });
+    });
 })
 describe('Kata Class', ()=>{
-    let catalogo;
     beforeEach(() => {
-        catalogo = new CatalogoKata();
+        
     });
     afterEach(()=>{
-        catalogo=null;
+        
     });
     describe('Metodos getters', () => {
         let kata;
@@ -637,39 +668,7 @@ describe('Kata Class', ()=>{
             expect(resultado).not.toBeUndefined()
         });
     });
- 
-    describe('Método agregarKata', () => {
-        let kata1;
-        let kata2;
 
-        beforeEach(() => {
-            kata1 = new Kata('Kata 1', 'Rodrigo'); 
-            kata2 = new Kata('Kata 2', 'Pedro');
-        });
-
-        afterEach(() => {
-            kata1 = null;
-            kata2 = null;
-        });
-
-        it('Debería añadir una nueva kata al catalogo ordenada por orden de ingreso', () => {
-            catalogo.agregarKata(kata1)
-            let resultado = catalogo.getLista()
-
-            expect(resultado).toContain(kata1);
-            expect(resultado).toHaveLength(1);
-            expect(resultado).not.toBeUndefined();
-
-            catalogo.agregarKata(kata2);
-            resultado = catalogo.getLista();
-
-            expect(resultado).toContain(kata2);
-            expect(resultado).toHaveLength(2);
-            expect(resultado).toStrictEqual([kata1, kata2])
-            expect(resultado).not.toBeUndefined();
-        });
-    });
-  
     describe('Método mostrarPuntuacion', () => {
         it('deberia retornar la puntuacion ingresada previamente', () => {
             const kata = new Kata();
