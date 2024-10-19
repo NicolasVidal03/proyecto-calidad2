@@ -134,25 +134,31 @@ describe('CatalogoKata Class', () => {
     });
 
     describe('buscarPorId method', () => {
+        beforeEach(() => {
+            kata1 = new Kata("Kata 1", "Autor A", "Descripción 1", "Fácil");
+            kata2 = new Kata("Kata 2", "Autor B", "Descripción 2", "Medio");
+        });
+        afterEach(() => {
+            catalogo.eliminarKata(0);
+            catalogo.eliminarKata(1);
+            kata1 = null;
+            kata2 = null;
+        });
         it("should return undefined when listaKatas is empty", () => {
-            const catalogo = new CatalogoKata();
             const result = catalogo.buscarPorId(1);
+            expect(catalogo.listaKatas.length).toBe(0); 
             expect(result).toBeUndefined();
         });
         it("should return the kata with the matching ID", () => {
-            const kata1 = new Kata("Kata 1", "Author A", "Description 1", "Easy");
             kata1.setId(1);
-            const catalogo = new CatalogoKata();
             catalogo.listaKatas = [kata1];
             const result = catalogo.buscarPorId(1);
             expect(result).toBe(kata1);
+            expect(result).toMatchObject({_descripcion: "Descripción 1",_autor: "Autor A",_id: 1}); 
         });
         it("should return undefined when no kata matches the given ID", () => {
-            const kata1 = new Kata("Kata 1", "Author A", "Description 1", "Easy");
             kata1.setId(1);
-            const catalogo = new CatalogoKata();
             catalogo.listaKatas = [kata1];
-            
             const result = catalogo.buscarPorId(3);
             expect(result).toBeUndefined();
         });  
