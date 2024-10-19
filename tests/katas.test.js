@@ -180,7 +180,7 @@ describe('CatalogoKata Class', () => {
         });  
     })
 
-    describe('Ordenar por autor', () => {
+    describe('Metodo ordenarPorAutor', () => {
         it('nombreA es primero sobre nombreB', () => {
             const nombreA = new Kata("Kata 1", "Angelica");
             const nombreB = new Kata("Kata 2", "Bernardo");
@@ -189,8 +189,12 @@ describe('CatalogoKata Class', () => {
             catalogo.agregarKata(nombreB);
 
             catalogo.ordenarPorAutor();
+            const resultado = catalogo.getLista()
 
-            expect(catalogo.getLista()[0].getAutor()).toBe("Angelica");
+            expect(resultado).toStrictEqual([nombreA, nombreB]);
+            expect(resultado).toContain(nombreB);
+            expect(resultado).toHaveLength(2);
+            expect(resultado).not.toBeUndefined()
         });
         it('nombreA es segundo sobre nombreB', () => {
             const nombreA = new Kata("Kata 1", "Romero");
@@ -200,8 +204,12 @@ describe('CatalogoKata Class', () => {
             catalogo.agregarKata(nombreB);
 
             catalogo.ordenarPorAutor();
+            const resultado = catalogo.getLista()
 
-            expect(catalogo.getLista()[0].getAutor()).toBe("Andres");
+            expect(resultado).toStrictEqual([nombreB, nombreA]);
+            expect(resultado).toContain(nombreA);
+            expect(resultado).toHaveLength(2);
+            expect(resultado).not.toBeUndefined()
         });
         it('nombreA es igual a nombreB', () => {
             const nombreA = new Kata("Kata 1", "Jorge");
@@ -211,8 +219,12 @@ describe('CatalogoKata Class', () => {
             catalogo.agregarKata(nombreB);
 
             catalogo.ordenarPorAutor();
+            const resultado = catalogo.getLista()
 
-            expect(catalogo.getLista()[0].getAutor()).toBe("Jorge");
+            expect(resultado).toStrictEqual([nombreA, nombreB]);
+            expect(resultado).toContain(nombreB);
+            expect(resultado).toHaveLength(2);
+            expect(resultado).not.toBeUndefined()
         });
     });
 
