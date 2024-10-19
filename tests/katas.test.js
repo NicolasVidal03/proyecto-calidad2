@@ -508,6 +508,13 @@ describe('CatalogoKata Class', () => {
     });
 })
 describe('Kata Class', ()=>{
+    let catalogo;
+    beforeEach(() => {
+        catalogo = new CatalogoKata();
+    });
+    afterEach(()=>{
+        catalogo=null;
+    });
     describe('Metodos getters', () => {
         let kata;
 
