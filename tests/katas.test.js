@@ -483,6 +483,14 @@ describe('CatalogoKata Class', () => {
     });
 })
 describe('Kata Class', ()=>{
+    let kata;
+    beforeEach(() => {
+        kata = new Kata("Kata 1", "Autor A", "Descripción A", "Fácil");
+    });
+
+    afterEach(() => {
+        kata = null;
+    });
     describe('Metodos getters', () => {
         it('deberia devolver el nombre de la kata', () => {
             const kata = new Kata('Nombre de Kata');
@@ -580,6 +588,45 @@ describe('Kata Class', ()=>{
             expect(resultado).not.toBeUndefined();
         });
     });
+    describe('Metodos setters',()=>{
+        beforeEach(() => {
+            kata = new Kata("Kata 1", "Autor A", "Descripción A", "Fácil");
+        });
+    
+        afterEach(() => {
+            kata = null;
+        });
+        it('debería actualizar correctamente el nombre de la kata', () => {
+            const nuevoNombre = "Nombre A";
+            kata.setNombre(nuevoNombre);
+            expect(typeof kata._nombre).toBe("string");
+            expect(kata).toMatchObject({ _nombre: "Nombre A" });
+        });
+        it('debería actualizar correctamente el autor de la kata', () => {
+            const nuevoAutor = "Autor A";
+            kata.setAutor(nuevoAutor);
+            expect(typeof kata._nombre).toBe("string");
+            expect(kata).toMatchObject({ _autor: "Autor A" });
+        });
+        it('debería actualizar correctamente la descripcion de la kata', () => {
+            const nuevaDescripcion = "Descripcion A";
+            kata.setDescripcion(nuevaDescripcion);
+            expect(typeof kata._nombre).toBe("string");
+            expect(kata).toMatchObject({ _descripcion: "Descripcion A" });
+        });
+        it('debería actualizar correctamente la dificultad de la kata', () => {
+            const nuevaDificultad = "Facil";
+            kata.setDificultad(nuevaDificultad);
+            expect(typeof kata._nombre).toBe("string");
+            expect(kata).toMatchObject({ _dificultad: "Facil"});
+        });
+        it('debería actualizar correctamente el id de la kata', () => {
+            const nuevoId = 1;
+            kata.setId(nuevoId);
+            expect(typeof kata._id).toBe("number");
+            expect(kata).toMatchObject({ _id: 1 });
+        });
+    })
     describe('Método mostrar', () => {
         it('Debería mostrar el nombre de la kata y su autor entre divs', () => {
             const kata = new Kata('Kata 1', 'Roberto Carlos'); 
