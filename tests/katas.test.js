@@ -3,7 +3,8 @@ import { CatalogoKata, Kata } from '../src/katas';
 
 describe('CatalogoKata Class', () => {
     let catalogo;
-
+    let kata1;
+    let kata2;
     beforeEach(() => {
         catalogo = new CatalogoKata();
     });
@@ -11,8 +12,6 @@ describe('CatalogoKata Class', () => {
         catalogo=null;
     });
     describe('ordenarPorDescripcion method', () => {
-        let kata1;
-        let kata2;
         beforeEach(() => {
             kata1 = new Kata("Kata 1", "Autor 1", "Descripción A", "Fácil");
             kata2 = new Kata("Kata 2", "Autor 2", "Descripción B", "Medio");
@@ -20,6 +19,8 @@ describe('CatalogoKata Class', () => {
             catalogo.agregarKata(kata2);
         });
         afterEach(()=>{
+            catalogo.eliminarKata(0);
+            catalogo.eliminarKata(1);
             kata1 = null;
             kata2 = null;
         });
@@ -28,56 +29,70 @@ describe('CatalogoKata Class', () => {
             kata2.setDescripcion("Zebra")   
 
             catalogo.ordenarPorDescripcion();
+            const resultados = catalogo.getLista();
         
-            expect(catalogo.getLista()).toHaveLength(2);
-            expect(catalogo.getLista()[0]).toMatchObject({ _autor: "Autor 1", _descripcion: "Zebra" });
-            expect(catalogo.getLista()[1]).toMatchObject({ _autor: "Autor 2", _descripcion: "Zebra" });
-            expect(catalogo.getLista()[0]).toStrictEqual(kata1);
-            expect(catalogo.getLista()[1]).toStrictEqual(kata2);
+            expect(resultados).toHaveLength(2);
+            expect(resultados[0]).toMatchObject({ _autor: "Autor 1", _descripcion: "Zebra" });
+            expect(resultados[1]).toMatchObject({ _autor: "Autor 2", _descripcion: "Zebra" });
+            expect(resultados[0]).toStrictEqual(kata1);
+            expect(resultados[1]).toStrictEqual(kata2);
         });
         it('should sort correctly when descripcionA is lexicographically greater than descripcionB', () => {
             kata1.setDescripcion("Zebra")
             kata2.setDescripcion("Águila")
         
             catalogo.ordenarPorDescripcion();
-        
-            expect(catalogo.getLista()).toHaveLength(2);
-            expect(catalogo.getLista()[0]).toMatchObject({ _autor: "Autor 1", _descripcion: "Zebra" });
-            expect(catalogo.getLista()[1]).toMatchObject({ _autor: "Autor 2", _descripcion: "Águila" });
-            expect(catalogo.getLista()[0]).toStrictEqual(kata1);
-            expect(catalogo.getLista()[1]).toStrictEqual(kata2);
+            const resultados = catalogo.getLista();
+
+            expect(resultados).toHaveLength(2);
+            expect(resultados[0]).toMatchObject({ _autor: "Autor 1", _descripcion: "Zebra" });
+            expect(resultados[1]).toMatchObject({ _autor: "Autor 2", _descripcion: "Águila" });
+            expect(resultados[0]).toStrictEqual(kata1);
+            expect(resultados[1]).toStrictEqual(kata2);
         });
         it('should sort correctly when descripcionA is lexicographically greater than descripcionB', () => {
             kata1.setDescripcion("Águila")
             kata2.setDescripcion("Zebra")
         
             catalogo.ordenarPorDescripcion();
+            const resultados = catalogo.getLista();
         
-            expect(catalogo.getLista()).toHaveLength(2);
-            expect(catalogo.getLista()[0]).toMatchObject({ _descripcion: "Zebra", _autor: "Autor 2" });
-            expect(catalogo.getLista()[1]).toMatchObject({ _descripcion: "Águila", _autor: "Autor 1" });
-            expect(catalogo.getLista()[0]).toStrictEqual(kata2);
-            expect(catalogo.getLista()[1]).toStrictEqual(kata1);
+            expect(resultados).toHaveLength(2);
+            expect(resultados[0]).toMatchObject({ _descripcion: "Zebra", _autor: "Autor 2" });
+            expect(resultados[1]).toMatchObject({ _descripcion: "Águila", _autor: "Autor 1" });
+            expect(resultados[0]).toStrictEqual(kata2);
+            expect(resultados[1]).toStrictEqual(kata1);
         });
     });
 
     describe('buscarPorAuthor method', () => {
+        beforeEach(() => {
+            kata1 = new Kata("Kata 1", "Autor A", "Descripción 1", "Fácil");
+            kata2 = new Kata("Kata 2", "Autor B", "Descripción 2", "Medio");
+        });
+        afterEach(() => {
+            catalogo.eliminarKata(0);
+            catalogo.eliminarKata(1);
+            kata1 = null;
+            kata2 = null;
+        });
         it('should return an empty list when the kata list is empty', () => {
             const resultados = catalogo.buscarPorAutor("Autor A");
             expect(resultados.length).toBe(0); 
+            expect(resultados).toEqual([]);
         });  
         it('should return an empty list when there are no katas with the specified author', () => {
-            const kata1 = new Kata("Kata 1", "Autor B", "Descripción 1", "Fácil");
-            catalogo.agregarKata(kata1);
+            catalogo.agregarKata(kata2);
             const resultados = catalogo.buscarPorAutor("Autor A");
-            expect(resultados.length).toBe(0);
+            expect(resultados).toHaveLength(0);
+            expect(resultados).toEqual([]);
         });
         it('should return a list with one match when there is a kata with the specified author', () => {
-            const kata1 = new Kata("Kata 1", "Autor A", "Descripción 1", "Fácil");        
-            catalogo.agregarKata(kata1);        
-            const resultados = catalogo.buscarPorAutor("Autor A");
+            catalogo.agregarKata(kata1);
+            const resultados = catalogo.buscarPorAutor("Autor A");    
             expect(resultados.length).toBe(1);
-            expect(resultados[0].getAutor()).toBe("Autor A");
+            expect(resultados[0]).toMatchObject({ _autor: "Autor A" });
+            expect(resultados[0]).toStrictEqual(kata1);
         });
     });
 
