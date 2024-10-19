@@ -685,6 +685,42 @@ describe('Kata Class', ()=>{
             expect(typeof kata._id).toBe("number");
             expect(kata).toMatchObject({ _id: 1 });
         });
+        it('debería actualizar la puntuación a -1 si se asigna un valor negativo', () => {
+            const puntuacionNegativa = -3;
+            kata.setPuntuacion(puntuacionNegativa);
+            expect(typeof kata._puntuacion).toBe("number");
+            expect(kata).toMatchObject({ _puntuacion: -1 });
+        });
+        it('no debería actualizar la puntuación si el valor está fuera del rango permitido', () => {
+            const puntuacionDentroDelRango = 50;
+            kata.setPuntuacion(puntuacionDentroDelRango);
+            expect(typeof kata._puntuacion).toBe("number");
+            expect(kata).toMatchObject({_puntuacion: 50 });
+        });
+        it('debería actualizar la puntuación a -1 si se asigna un valor mayor a 100', () => {
+            const puntuacionAlta = 200;
+            kata.setPuntuacion(puntuacionAlta);
+            expect(typeof kata._puntuacion).toBe("number");
+            expect(kata).toMatchObject({ _puntuacion: -1 });
+        });
+        it('debería no actualizar el estado si se asigna otro estado', () => {
+            const estado = "Anterior";
+            const resultado = kata.setEstado(estado);
+            expect(resultado).toBe(false);
+            expect(kata).toHaveProperty( '_estado', "No Terminado");
+        });
+        it('debería actualizar el estado a "No terminado" y devolver true', () => {
+            const estado = "No terminado";
+            const resultado = kata.setEstado(estado);
+            expect(resultado).toBe(true);
+            expect(kata).toHaveProperty('_estado', estado);
+        });
+        it('debería actualizar el estado a "Terminado" y devolver true', () => {
+            const estado = "Terminado";
+            const resultado = kata.setEstado(estado);
+            expect(resultado).toBe(true);
+            expect(kata).toHaveProperty('_estado', estado);
+        });
     })
     describe('Método mostrar', () => {
         let kata;
