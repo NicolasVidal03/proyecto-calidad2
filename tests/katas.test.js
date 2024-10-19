@@ -538,6 +538,32 @@ describe('CatalogoKata Class', () => {
             expect(resultado).not.toBeUndefined();
         });
     });
+    describe('Método eliminarKata', () => {
+        beforeEach(() => {
+            catalogo.listaKatas.push(kata1, kata2);
+        });
+    
+        afterEach(() => {
+            catalogo = null;
+            kata1 = null;
+            kata2 = null;
+        });
+    
+        it('debería eliminar correctamente la kata del array listaKatas', () => {
+            const pos = 0;
+    
+            expect(catalogo.listaKatas.length).toBe(2);
+            expect(catalogo.listaKatas).toContain(kata1);
+            expect(catalogo.listaKatas).toContain(kata2);
+    
+            catalogo.eliminarKata(pos);
+            
+            expect(catalogo.listaKatas.length).toBe(1);
+            expect(catalogo.listaKatas).toContain(kata2);
+            expect(catalogo.listaKatas).toMatchObject([kata2]);
+            expect(catalogo.listaKatas.length).toBeGreaterThan(0);
+        });
+    });
 })
 describe('Kata Class', ()=>{
     let kata;
