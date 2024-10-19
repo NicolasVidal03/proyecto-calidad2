@@ -363,26 +363,7 @@ describe('CatalogoKata Class', () => {
             expect(resultado).not.toBeUndefined();
         });
     });
-    describe('Método mostrarPuntuacion', () => {
-        it('deberia retornar la puntuacion ingresada previamente', () => {
-            const kata = new Kata();
-            kata.setPuntuacion(5); 
-            
-            const resultado = kata.mostrarPuntuacion();
-            expect(resultado).toBe(5); 
-            expect(typeof resultado).toBe("number");
-
-        });
-        it('deberia retornar "Sin calificar" en caso de que no se le asigne ninguna puntuacion(osea puntuacion sea igual a -1)', () => {
-            const kata = new Kata(); 
-            
-            expect(kata.getPuntuacion()).toBe(-1);
-            expect(typeof kata.getPuntuacion()).toBe("number");
-            expect(kata.mostrarPuntuacion()).toBe("Sin calificar");
-            expect(typeof kata.mostrarPuntuacion()).toBe("string");
-            
-        });
-    });
+    
     describe('Metodo ordenarPorNombre', () => {
     
         it('deberia ordenar correctamente en orden ascendente por nombre', () => {
@@ -479,6 +460,29 @@ describe('CatalogoKata Class', () => {
         });
     });
 
+    describe('Método agregarKata', () => {
+        it('Debería añadir una nueva kata al catalogo ordenada por orden de ingreso', () => {
+            const kata1 = new Kata('Kata 1', 'Rodrigo'); 
+            catalogo.agregarKata(kata1)
+            let resultado = catalogo.getLista()
+
+            expect(resultado).toContain(kata1);
+            expect(resultado).toHaveLength(1);
+            expect(resultado).not.toBeUndefined();
+
+            const kata2 = new Kata('Kata 2', 'Pedro');
+            catalogo.agregarKata(kata2);
+            resultado = catalogo.getLista();
+
+            expect(resultado).toContain(kata2);
+            expect(resultado).toHaveLength(2);
+            expect(resultado).toStrictEqual([kata1, kata2])
+            expect(resultado).not.toBeUndefined();
+            
+        });
+    });
+})
+describe('Kata Class', ()=>{
     describe('Metodos getters', () => {
         it('deberia devolver el nombre de la kata', () => {
             const kata = new Kata('Nombre de Kata');
@@ -576,7 +580,6 @@ describe('CatalogoKata Class', () => {
             expect(resultado).not.toBeUndefined();
         });
     });
-  
     describe('Método mostrar', () => {
         it('Debería mostrar el nombre de la kata y su autor entre divs', () => {
             const kata = new Kata('Kata 1', 'Roberto Carlos'); 
@@ -591,26 +594,25 @@ describe('CatalogoKata Class', () => {
             expect(resultado).not.toBeUndefined()
         });
     });
+    describe('Método mostrarPuntuacion', () => {
+        it('deberia retornar la puntuacion ingresada previamente', () => {
+            const kata = new Kata();
+            kata.setPuntuacion(5); 
+            
+            const resultado = kata.mostrarPuntuacion();
+            expect(resultado).toBe(5); 
+            expect(typeof resultado).toBe("number");
 
-    describe('Método agregarKata', () => {
-        it('Debería añadir una nueva kata al catalogo ordenada por orden de ingreso', () => {
-            const kata1 = new Kata('Kata 1', 'Rodrigo'); 
-            catalogo.agregarKata(kata1)
-            let resultado = catalogo.getLista()
-
-            expect(resultado).toContain(kata1);
-            expect(resultado).toHaveLength(1);
-            expect(resultado).not.toBeUndefined();
-
-            const kata2 = new Kata('Kata 2', 'Pedro');
-            catalogo.agregarKata(kata2);
-            resultado = catalogo.getLista();
-
-            expect(resultado).toContain(kata2);
-            expect(resultado).toHaveLength(2);
-            expect(resultado).toStrictEqual([kata1, kata2])
-            expect(resultado).not.toBeUndefined();
+        });
+        it('deberia retornar "Sin calificar" en caso de que no se le asigne ninguna puntuacion(osea puntuacion sea igual a -1)', () => {
+            const kata = new Kata(); 
+            
+            expect(kata.getPuntuacion()).toBe(-1);
+            expect(typeof kata.getPuntuacion()).toBe("number");
+            expect(kata.mostrarPuntuacion()).toBe("Sin calificar");
+            expect(typeof kata.mostrarPuntuacion()).toBe("string");
             
         });
     });
+    
 })
