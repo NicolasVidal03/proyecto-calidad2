@@ -282,12 +282,17 @@ describe('CatalogoKata Class', () => {
             
             const resultado = kata.mostrarPuntuacion();
             expect(resultado).toBe(5); 
+            expect(typeof resultado).toBe("number");
+
         });
         it('deberia retornar "Sin calificar" en caso de que no se le asigne ninguna puntuacion(osea puntuacion sea igual a -1)', () => {
             const kata = new Kata(); 
             
-            const resultado = kata.mostrarPuntuacion();
-            expect(resultado).toBe("Sin calificar");
+            expect(kata.getPuntuacion()).toBe(-1);
+            expect(typeof kata.getPuntuacion()).toBe("number");
+            expect(kata.mostrarPuntuacion()).toBe("Sin calificar");
+            expect(typeof kata.mostrarPuntuacion()).toBe("string");
+            
         });
     });
     describe('Metodo ordenarPorNombre', () => {
