@@ -92,30 +92,44 @@ describe('CatalogoKata Class', () => {
             catalogo.agregarKata(kata1);
             const resultados = catalogo.buscarPorAutor("Autor A");    
             expect(resultados.length).toBe(1);
+            expect(resultados).toContain(kata1);
             expect(resultados[0]).toMatchObject({ _autor: "Autor A" });
             expect(resultados[0]).toStrictEqual(kata1);
         });
     });
 
     describe('buscarPorEstado method', () => {
+        beforeEach(() => {
+            kata1 = new Kata("Kata 1", "Autor A", "Descripción 1", "Fácil");
+            kata2 = new Kata("Kata 2", "Autor B", "Descripción 2", "Medio");
+        });
+        afterEach(() => {
+            catalogo.eliminarKata(0);
+            catalogo.eliminarKata(1);
+            kata1 = null;
+            kata2 = null;
+        });
         it('should return an empty list when the list of katas is empty', () => {
             const resultado = catalogo.buscarPorEstado("Terminado");
+            expect(catalogo.listaKatas.length).toBe(0); 
             expect(resultado.length).toBe(0);
+            expect(resultado).toEqual([]);
         });
         it('should return an empty list when there are no katas with the searched state', () => {
-            const kata1 = new Kata("Kata 1", "Autor A", "Descripción 1", "Difícil");
             kata1.setEstado("Terminado");
             catalogo.agregarKata(kata1);
             const resultado = catalogo.buscarPorEstado("No terminado");
             expect(resultado.length).toBe(0);
+            expect(resultado).toEqual([]);
         }); 
         it('should return a list with matches when there are katas with the searched state', () => {
-            const kata1 = new Kata("Kata 1", "Autor A", "Descripción 1", "Fácil");
             kata1.setEstado("Terminado");
             catalogo.agregarKata(kata1);
             const resultado = catalogo.buscarPorEstado("Terminado");
             expect(resultado.length).toBe(1);
             expect(resultado).toContain(kata1);
+            expect(resultado[0]).toMatchObject({ _estado: "Terminado" });
+            expect(resultado[0]).toStrictEqual(kata1);
         });
     });
 
