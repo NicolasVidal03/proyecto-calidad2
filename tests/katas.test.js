@@ -613,7 +613,6 @@ describe('CatalogoKata Class', () => {
             kata = null;
         });
 
-
         it('Debería mostrar el nombre de la kata y su autor entre divs', () => {
             const resultado = kata.mostrar();
 
@@ -628,8 +627,20 @@ describe('CatalogoKata Class', () => {
     });
 
     describe('Método agregarKata', () => {
+        let kata1;
+        let kata2;
+
+        beforeEach(() => {
+            kata1 = new Kata('Kata 1', 'Rodrigo'); 
+            kata2 = new Kata('Kata 2', 'Pedro');
+        });
+
+        afterEach(() => {
+            kata1 = null;
+            kata2 = null;
+        });
+
         it('Debería añadir una nueva kata al catalogo ordenada por orden de ingreso', () => {
-            const kata1 = new Kata('Kata 1', 'Rodrigo'); 
             catalogo.agregarKata(kata1)
             let resultado = catalogo.getLista()
 
@@ -637,7 +648,6 @@ describe('CatalogoKata Class', () => {
             expect(resultado).toHaveLength(1);
             expect(resultado).not.toBeUndefined();
 
-            const kata2 = new Kata('Kata 2', 'Pedro');
             catalogo.agregarKata(kata2);
             resultado = catalogo.getLista();
 
