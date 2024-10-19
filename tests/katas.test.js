@@ -151,6 +151,9 @@ describe('CatalogoKata Class', () => {
             expect(resultado.length).toBe(2);
             expect(resultado).toContain(kata1);
             expect(resultado).toContain(kata2);
+            resultado.forEach(kata => {
+                expect(kata.getDescripcion()).toMatch(/Descripcion/);
+            });
         });
         it('deberia devolver una array con UNA kata que coincida con la descripción buscada', () => {
             const catalogo = new CatalogoKata();
@@ -164,6 +167,7 @@ describe('CatalogoKata Class', () => {
             const resultado = catalogo.buscarPorDescripcion("Descripcion");
             expect(resultado.length).toBe(1);
             expect(resultado).toContain(kata1);
+            expect(resultado[0].getDescripcion()).toEqual("Descripcion");
         });
         it('deberia devolver un array vacio [] cuando la descripcion no coincida con ninguna kata', () => {
             const catalogo = new CatalogoKata(); 
