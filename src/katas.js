@@ -68,9 +68,9 @@ export class Kata{
 
 
     mostrar(){
-//        return `<button class=\"btn\">Nombre kata: ${this._nombre}, Autor: ${this._autor}</button>`;
-    return `<div>Nombre kata: ${this._nombre}, Autor: ${this._autor}</div>`;
+        return `<div>Nombre kata: ${this._nombre}, Autor: ${this._autor}</div>`;
     }
+
     mostrarPuntuacion(){
         let puntuacion = this.getPuntuacion();
         if(puntuacion == -1){
