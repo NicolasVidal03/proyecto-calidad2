@@ -22,8 +22,6 @@ describe('Archivo buscarPorDificultad.js', () => {
             
             expect(mensaje).toContain('Angelica');
             expect(typeof mensaje).toEqual('string')
-            expect(mensaje).contain('<div>');
-            expect(mensaje).contain('</div>'); 
             expect(mensaje).toMatch(/^<div>.*<\/div>$/);
             expect(mensaje).toBe(resultado_esperado);
             expect(mensaje.length).toBeGreaterThan(0);

@@ -237,10 +237,23 @@ describe('CatalogoKata Class', () => {
     })
 
     describe('Metodo ordenarPorAutor', () => {
-        it('nombreA es primero sobre nombreB', () => {
-            const nombreA = new Kata("Kata 1", "Angelica");
-            const nombreB = new Kata("Kata 2", "Bernardo");
+        let nombreA;
+        let nombreB;
+        let nombreC;
 
+        beforeEach(() => {
+            nombreA = new Kata("Kata 1", "Angelica");
+            nombreB = new Kata("Kata 2", "Bernardo");
+            nombreC = new Kata("Kata 3", "Angelica")
+        });
+
+        afterEach(() => {
+            nombreA = null;
+            nombreB = null;
+            nombreC = null;
+        });
+
+        it('nombreA es primero sobre nombreB', () => {
             catalogo.agregarKata(nombreA);
             catalogo.agregarKata(nombreB);
 
@@ -253,32 +266,26 @@ describe('CatalogoKata Class', () => {
             expect(resultado).not.toBeUndefined()
         });
         it('nombreA es segundo sobre nombreB', () => {
-            const nombreA = new Kata("Kata 1", "Romero");
-            const nombreB = new Kata("Kata 2", "Andres");
-
-            catalogo.agregarKata(nombreA);
             catalogo.agregarKata(nombreB);
-
-            catalogo.ordenarPorAutor();
-            const resultado = catalogo.getLista()
-
-            expect(resultado).toStrictEqual([nombreB, nombreA]);
-            expect(resultado).toContain(nombreA);
-            expect(resultado).toHaveLength(2);
-            expect(resultado).not.toBeUndefined()
-        });
-        it('nombreA es igual a nombreB', () => {
-            const nombreA = new Kata("Kata 1", "Jorge");
-            const nombreB = new Kata("Kata 2", "Jorge");
-
             catalogo.agregarKata(nombreA);
-            catalogo.agregarKata(nombreB);
 
             catalogo.ordenarPorAutor();
             const resultado = catalogo.getLista()
 
             expect(resultado).toStrictEqual([nombreA, nombreB]);
-            expect(resultado).toContain(nombreB);
+            expect(resultado).toContain(nombreA);
+            expect(resultado).toHaveLength(2);
+            expect(resultado).not.toBeUndefined()
+        });
+        it('nombreA es igual a nombreC', () => {
+            catalogo.agregarKata(nombreA);
+            catalogo.agregarKata(nombreC);
+
+            catalogo.ordenarPorAutor();
+            const resultado = catalogo.getLista()
+
+            expect(resultado).toStrictEqual([nombreA, nombreC]);
+            expect(resultado).toContain(nombreC);
             expect(resultado).toHaveLength(2);
             expect(resultado).not.toBeUndefined()
         });
