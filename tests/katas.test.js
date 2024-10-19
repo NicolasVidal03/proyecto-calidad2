@@ -505,8 +505,17 @@ describe('CatalogoKata Class', () => {
     });
 
     describe('Metodos getters', () => {
+        let kata;
+
+        beforeEach(() => {
+            kata = new Kata('Nombre de Kata', 'Jose Carlos', 'Esta es una descripcion', 'Media', 78);
+        });
+
+        afterEach(() => {
+            kata = null;
+        });
+
         it('deberia devolver el nombre de la kata', () => {
-            const kata = new Kata('Nombre de Kata');
             const resultado = kata.getNombre();
     
             expect(typeof resultado).toBe('string');
@@ -518,7 +527,6 @@ describe('CatalogoKata Class', () => {
         });
 
         it('deberia devolver el nombre del autor de la kata', () => {
-            const kata = new Kata('kata', 'Jose Carlos');
             const resultado = kata.getAutor();
     
             expect(typeof resultado).toBe('string');
@@ -530,7 +538,6 @@ describe('CatalogoKata Class', () => {
         });
     
         it('deberia devolver la descripcion de la kata', () => {
-            const kata = new Kata('kata', 'autor', 'Esta es una descripcion');
             const resultado = kata.getDescripcion();
 
             expect(typeof resultado).toBe('string');
@@ -542,7 +549,6 @@ describe('CatalogoKata Class', () => {
         });
 
         it('deberia devolver una descripcion corta de la kata', () => {
-            const kata = new Kata('kata', 'Jose Carlos', 'Esta es una descripcion larga que debe ser resumida');
             const resultado = kata.getDescCorta();
     
             expect(typeof resultado).toBe('string');
@@ -554,7 +560,6 @@ describe('CatalogoKata Class', () => {
         });
 
         it('deberia devolver la dificultad de la kata', () => {
-            const kata = new Kata('kata', 'Jose Carlos', 'descripcion', 'Media');
             const resultado = kata.getDificultad();
     
             expect(typeof resultado).toBe('string');
@@ -566,7 +571,6 @@ describe('CatalogoKata Class', () => {
         });
 
         it('deberia devolver el id de la Kata cuando no se encuentra en un catalogo', () => {
-            const kata = new Kata('kata');
             const resultado = kata.getId();
     
             expect(typeof resultado).toBe('number');
@@ -578,7 +582,6 @@ describe('CatalogoKata Class', () => {
         });
 
         it('deberia devolver la puntuacion Kata', () => {
-            const kata = new Kata('kata', 'Jose Carlos', 'descripcion', 'Media', 78);
             const resultado = kata.getPuntuacion();
     
             expect(typeof resultado).toBe('number');
@@ -591,7 +594,6 @@ describe('CatalogoKata Class', () => {
         });
 
         it('deberia devolver el estado de una Kata recien creada', () => {
-            const kata = new Kata('kata');
             const resultado = kata.getEstado();
     
             expect(typeof resultado).toBe('string');
