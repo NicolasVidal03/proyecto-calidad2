@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { Estudiante, Usuario } from "../src/usuario"
 
 describe('metodo getNombre', () => {
@@ -27,9 +27,18 @@ describe('metodo getDesc', () => {
     });
 });
 
-describe('Metodo getTipo()', () => {
+describe('Metodo getTipo() de Estudiante', () => {
+    let estudiante;
+    
+    beforeEach(() => {
+        estudiante = new Estudiante('Juan', 'Descripcion', 70);
+    });
+
+    afterEach(() => {
+        estudiante = null;
+    });
+
     it('Debería devolver el tipo del estudiante despues de instanciar la clase Usuario', () => {
-        const estudiante = new Estudiante('Juan', 'Descripcion', 70);
         const resultado = estudiante.getTipo();
 
         expect(resultado).toBe('estudiante')
