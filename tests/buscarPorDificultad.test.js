@@ -20,13 +20,24 @@ describe('Archivo buscarPorDificultad.js', () => {
             const mensaje = mostrarKatas(catalogo.getLista());
             const resultado_esperado = '<div>Nombre kata: Kata 1, Autor: Angelica</div><div>Nombre kata: Kata 2, Autor: Maria</div>'
             
+            expect(mensaje).toContain('Angelica');
+            expect(typeof mensaje).toEqual('string')
+            expect(mensaje).contain('<div>');
+            expect(mensaje).contain('</div>'); 
+            expect(mensaje).toMatch(/^<div>.*<\/div>$/);
             expect(mensaje).toBe(resultado_esperado);
+            expect(mensaje.length).toBeGreaterThan(0);
+            expect(mensaje).not.toBeUndefined();
         });
         it('El catalogo se encuentra vacío', () => {
             const mensaje = mostrarKatas(catalogo.getLista());
             const resultado_esperado = ''
             
             expect(mensaje).toBe(resultado_esperado);
+            expect(typeof mensaje).toEqual('string')
+            expect(mensaje).not.toContain('Angelica');
+            expect(mensaje).toHaveLength(0);
+            expect(mensaje).not.toBeUndefined();
         });
     });
 
