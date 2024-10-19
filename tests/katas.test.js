@@ -189,7 +189,7 @@ describe('CatalogoKata Class', () => {
         });  
     })
 
-    describe('Ordenar por autor', () => {
+    describe('Metodo ordenarPorAutor', () => {
         it('nombreA es primero sobre nombreB', () => {
             const nombreA = new Kata("Kata 1", "Angelica");
             const nombreB = new Kata("Kata 2", "Bernardo");
@@ -198,8 +198,12 @@ describe('CatalogoKata Class', () => {
             catalogo.agregarKata(nombreB);
 
             catalogo.ordenarPorAutor();
+            const resultado = catalogo.getLista()
 
-            expect(catalogo.getLista()[0].getAutor()).toBe("Angelica");
+            expect(resultado).toStrictEqual([nombreA, nombreB]);
+            expect(resultado).toContain(nombreB);
+            expect(resultado).toHaveLength(2);
+            expect(resultado).not.toBeUndefined()
         });
         it('nombreA es segundo sobre nombreB', () => {
             const nombreA = new Kata("Kata 1", "Romero");
@@ -209,8 +213,12 @@ describe('CatalogoKata Class', () => {
             catalogo.agregarKata(nombreB);
 
             catalogo.ordenarPorAutor();
+            const resultado = catalogo.getLista()
 
-            expect(catalogo.getLista()[0].getAutor()).toBe("Andres");
+            expect(resultado).toStrictEqual([nombreB, nombreA]);
+            expect(resultado).toContain(nombreA);
+            expect(resultado).toHaveLength(2);
+            expect(resultado).not.toBeUndefined()
         });
         it('nombreA es igual a nombreB', () => {
             const nombreA = new Kata("Kata 1", "Jorge");
@@ -220,8 +228,12 @@ describe('CatalogoKata Class', () => {
             catalogo.agregarKata(nombreB);
 
             catalogo.ordenarPorAutor();
+            const resultado = catalogo.getLista()
 
-            expect(catalogo.getLista()[0].getAutor()).toBe("Jorge");
+            expect(resultado).toStrictEqual([nombreA, nombreB]);
+            expect(resultado).toContain(nombreB);
+            expect(resultado).toHaveLength(2);
+            expect(resultado).not.toBeUndefined()
         });
     });
 
@@ -237,16 +249,25 @@ describe('CatalogoKata Class', () => {
 
             const catalogo_nuevo = catalogo.clone();
 
-            expect(catalogo).toEqual(catalogo_nuevo)
+            const resultado = catalogo_nuevo.getLista()
+
+            expect(resultado).toStrictEqual([kata1, kata2, kata3]);
+            expect(resultado).toContainEqual(kata1);
+            expect(resultado).toHaveLength(3);
+            expect(resultado).not.toBeUndefined()
         });
         it('no entra al ciclo for', () => {
             const catalogo_nuevo = catalogo.clone();
 
-            expect(catalogo_nuevo.getLista()).toEqual([]);
+            const resultado = catalogo_nuevo.getLista()
+
+            expect(resultado).toStrictEqual([]);
+            expect(resultado).toHaveLength(0);
+            expect(resultado).not.toBeUndefined()
         });
     });
 
-    describe('Buscar katas por nombre', () => {
+    describe('Metodo buscarPorNombre', () => {
         it('la lista de katas se encuentra con elementos y encuentra coincidencias', () => {
             const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
             const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
@@ -256,7 +277,14 @@ describe('CatalogoKata Class', () => {
             catalogo.agregarKata(kata2);
             catalogo.agregarKata(kata3);
 
-            expect(catalogo.buscarPorNombre('Kata 3')[0]).toEqual(kata3)
+            const resultado = catalogo.buscarPorNombre('Kata 3')[0]
+
+            expect(resultado).toEqual(kata3);
+            expect(resultado).toHaveProperty('_nombre', 'Kata 3')
+            expect(resultado).toBeInstanceOf(Kata)
+            expect(resultado).toBeTruthy();
+            expect(typeof resultado).toEqual('object')
+            expect(resultado).not.toBeUndefined()
         });
         it('la lista de katas se encuentra con elementos y no encuentra ninguna coincidencia', () => {
             const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
@@ -267,12 +295,25 @@ describe('CatalogoKata Class', () => {
             catalogo.agregarKata(kata2);
             catalogo.agregarKata(kata3);
 
-            expect(catalogo.buscarPorNombre('Kata 6')).toEqual([])
+            const resultado = catalogo.buscarPorNombre('Kata 6')
+
+            expect(resultado).toBeTruthy();
+            expect(resultado).toEqual([]);
+            expect(resultado).not.toEqual(kata1);
+            expect(resultado).toHaveLength(0);
+            expect(resultado[0]).toBeUndefined();
+            expect(resultado).not.toBeUndefined();
         });
         it('la lista de katas se encuentra vacía', () => {
             const catalogo_vacio = new CatalogoKata()
 
-            expect(catalogo_vacio.buscarPorNombre('')).toEqual([])
+            const resultado = catalogo.buscarPorNombre('')
+
+            expect(resultado).toBeTruthy();
+            expect(resultado).toEqual([]);
+            expect(resultado).toHaveLength(0);
+            expect(resultado[0]).toBeUndefined();
+            expect(resultado).not.toBeUndefined();
         });
     });
     describe('Método mostrarPuntuacion', () => {
