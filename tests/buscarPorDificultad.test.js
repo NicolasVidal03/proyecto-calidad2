@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { mostrarKatas, arrayKatasConMismaDificultad } from '../src/buscarPorDificultad';
+import { mostrarKatas, arrayKatasConMismaDificultad, buscarPorDificultad } from '../src/buscarPorDificultad';
 import { Kata, CatalogoKata } from '../src/katas';
 
 describe('Archivo buscarPorDificultad.js', () => {
@@ -82,6 +82,24 @@ describe('Archivo buscarPorDificultad.js', () => {
             expect(resultado).not.toContain(kata1); 
             expect(resultado).not.toContain(kata2); 
             expect(resultado).toHaveLength(0); 
+        });
+    });
+    describe('Function buscarPorDificultad', () => {
+        let kata;
+    
+        beforeEach(() => {
+            kata = new Kata("Kata 1", "Autor A", "Descripción A", "Fácil");
+        });
+    
+        afterEach(() => {
+            kata = null;
+        });
+    
+        it('debería devolver true si la dificultad coincide', () => {
+            const dificultadBuscada = "Fácil";
+            const resultado = buscarPorDificultad(kata, dificultadBuscada);
+            
+            expect(resultado).toBe(true);
         });
     });
 });
