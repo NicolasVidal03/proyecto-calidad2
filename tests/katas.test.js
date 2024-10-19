@@ -334,11 +334,23 @@ describe('CatalogoKata Class', () => {
     });
 
     describe('Metodo buscarPorNombre', () => {
-        it('la lista de katas se encuentra con elementos y encuentra coincidencias', () => {
-            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
-            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
-            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+        let kata1;
+        let kata2;
+        let kata3;
 
+        beforeEach(() => {
+            kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
+            kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+        });
+
+        afterEach(() => {
+            kata1 = null;
+            kata2 = null;
+            kata3 = null;
+        });
+
+        it('la lista de katas se encuentra con elementos y encuentra coincidencias', () => {
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata2);
             catalogo.agregarKata(kata3);
@@ -353,10 +365,6 @@ describe('CatalogoKata Class', () => {
             expect(resultado).not.toBeUndefined()
         });
         it('la lista de katas se encuentra con elementos y no encuentra ninguna coincidencia', () => {
-            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
-            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
-            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
-
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata2);
             catalogo.agregarKata(kata3);
@@ -371,8 +379,6 @@ describe('CatalogoKata Class', () => {
             expect(resultado).not.toBeUndefined();
         });
         it('la lista de katas se encuentra vacía', () => {
-            const catalogo_vacio = new CatalogoKata()
-
             const resultado = catalogo.buscarPorNombre('')
 
             expect(resultado).toBeTruthy();
