@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { CatalogoKata, Kata } from '../src/katas'; 
 
 describe('CatalogoKata Class', () => {
@@ -7,46 +7,57 @@ describe('CatalogoKata Class', () => {
     beforeEach(() => {
         catalogo = new CatalogoKata();
     });
-
+    afterEach(()=>{
+        catalogo=null;
+    });
     describe('ordenarPorDescripcion method', () => {
-        it('should maintain the same order when descriptions are equal', () => {
-            const kata1 = new Kata("Kata 1", "Autor 1", "Descripción Igual", "Fácil");
-            const kata2 = new Kata("Kata 2", "Autor 2", "Descripción Igual", "Medio");
-        
+        let kata1;
+        let kata2;
+        beforeEach(() => {
+            kata1 = new Kata("Kata 1", "Autor 1", "Descripción A", "Fácil");
+            kata2 = new Kata("Kata 2", "Autor 2", "Descripción B", "Medio");
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata2);
-        
+        });
+        afterEach(()=>{
+            kata1 = null;
+            kata2 = null;
+        });
+        it('should maintain the same order when descriptions are equal', () => { 
+            kata1.setDescripcion("Zebra")
+            kata2.setDescripcion("Zebra")   
+
             catalogo.ordenarPorDescripcion();
         
-            const listaOrdenada = catalogo.getLista();
-            expect(listaOrdenada[0].getDescripcion()).toBe("Descripción Igual");
-            expect(listaOrdenada[1].getDescripcion()).toBe("Descripción Igual");
+            expect(catalogo.getLista()).toHaveLength(2);
+            expect(catalogo.getLista()[0]).toMatchObject({ _autor: "Autor 1", _descripcion: "Zebra" });
+            expect(catalogo.getLista()[1]).toMatchObject({ _autor: "Autor 2", _descripcion: "Zebra" });
+            expect(catalogo.getLista()[0]).toStrictEqual(kata1);
+            expect(catalogo.getLista()[1]).toStrictEqual(kata2);
         });
         it('should sort correctly when descripcionA is lexicographically greater than descripcionB', () => {
-            const kata1 = new Kata("Kata 1", "Autor 1", "Zebra", "Fácil");
-            const kata2 = new Kata("Kata 2", "Autor 2", "Águila", "Medio");
-        
-            catalogo.agregarKata(kata1);
-            catalogo.agregarKata(kata2);
+            kata1.setDescripcion("Zebra")
+            kata2.setDescripcion("Águila")
         
             catalogo.ordenarPorDescripcion();
         
-            const listaOrdenada = catalogo.getLista();
-            expect(listaOrdenada[0].getDescripcion()).toBe("Zebra");
-            expect(listaOrdenada[1].getDescripcion()).toBe("Águila");
+            expect(catalogo.getLista()).toHaveLength(2);
+            expect(catalogo.getLista()[0]).toMatchObject({ _autor: "Autor 1", _descripcion: "Zebra" });
+            expect(catalogo.getLista()[1]).toMatchObject({ _autor: "Autor 2", _descripcion: "Águila" });
+            expect(catalogo.getLista()[0]).toStrictEqual(kata1);
+            expect(catalogo.getLista()[1]).toStrictEqual(kata2);
         });
         it('should sort correctly when descripcionA is lexicographically greater than descripcionB', () => {
-            const kata1 = new Kata("Kata 1", "Autor 1", "Águila", "Fácil");
-            const kata2 = new Kata("Kata 2", "Autor 2", "Zebra", "Medio");
-        
-            catalogo.agregarKata(kata1);
-            catalogo.agregarKata(kata2);
+            kata1.setDescripcion("Águila")
+            kata2.setDescripcion("Zebra")
         
             catalogo.ordenarPorDescripcion();
         
-            const listaOrdenada = catalogo.getLista();
-            expect(listaOrdenada[0].getDescripcion()).toBe("Zebra");
-            expect(listaOrdenada[1].getDescripcion()).toBe("Águila");
+            expect(catalogo.getLista()).toHaveLength(2);
+            expect(catalogo.getLista()[0]).toMatchObject({ _descripcion: "Zebra", _autor: "Autor 2" });
+            expect(catalogo.getLista()[1]).toMatchObject({ _descripcion: "Águila", _autor: "Autor 1" });
+            expect(catalogo.getLista()[0]).toStrictEqual(kata2);
+            expect(catalogo.getLista()[1]).toStrictEqual(kata1);
         });
     });
 
