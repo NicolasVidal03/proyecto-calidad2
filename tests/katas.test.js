@@ -78,6 +78,7 @@ describe('CatalogoKata Class', () => {
         });
         it('should return an empty list when the kata list is empty', () => {
             const resultados = catalogo.buscarPorAutor("Autor A");
+            expect(catalogo.listaKatas.length).toBe(0); 
             expect(resultados.length).toBe(0); 
             expect(resultados).toEqual([]);
         });  
