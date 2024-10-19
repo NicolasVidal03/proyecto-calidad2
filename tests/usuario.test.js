@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { Usuario } from "../src/usuario"
+import { Estudiante, Usuario } from "../src/usuario"
 
 describe('metodo getNombre', () => {
     it('deberia devolver el nombre del usuario despues de instanciar la clase Usuario', () => {
@@ -24,5 +24,19 @@ describe('metodo getDesc', () => {
         expect(resultado.length).toBeLessThanOrEqual(100);    
         expect(resultado).not.toBeUndefined();
         expect(resultado).toBe('Descripcion');
+    });
+});
+
+describe('Metodo getTipo()', () => {
+    it('Debería devolver el tipo del estudiante despues de instanciar la clase Usuario', () => {
+        const estudiante = new Estudiante('Juan', 'Descripcion', 70);
+        const resultado = estudiante.getTipo();
+
+        expect(resultado).toBe('estudiante')
+        expect(resultado).not.toBe('docente') 
+        expect(typeof resultado).toBe('string')
+        expect(resultado).toHaveLength(10) 
+        expect(resultado).toMatch(/^[a-zA-Z]+$/);    
+        expect(resultado).not.toBeUndefined();
     });
 });
