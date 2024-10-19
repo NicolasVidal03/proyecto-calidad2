@@ -240,12 +240,21 @@ describe('CatalogoKata Class', () => {
 
             const catalogo_nuevo = catalogo.clone();
 
-            expect(catalogo).toEqual(catalogo_nuevo)
+            const resultado = catalogo_nuevo.getLista()
+
+            expect(resultado).toStrictEqual([kata1, kata2, kata3]);
+            expect(resultado).toContainEqual(kata1);
+            expect(resultado).toHaveLength(3);
+            expect(resultado).not.toBeUndefined()
         });
         it('no entra al ciclo for', () => {
             const catalogo_nuevo = catalogo.clone();
 
-            expect(catalogo_nuevo.getLista()).toEqual([]);
+            const resultado = catalogo_nuevo.getLista()
+
+            expect(resultado).toStrictEqual([]);
+            expect(resultado).toHaveLength(0);
+            expect(resultado).not.toBeUndefined()
         });
     });
 
