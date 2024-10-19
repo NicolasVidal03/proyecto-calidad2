@@ -603,8 +603,18 @@ describe('CatalogoKata Class', () => {
     });
   
     describe('Método mostrar', () => {
+        let kata;
+
+        beforeEach(() => {
+            kata = new Kata('Kata 1', 'Roberto Carlos'); 
+        });
+
+        afterEach(() => {
+            kata = null;
+        });
+
+
         it('Debería mostrar el nombre de la kata y su autor entre divs', () => {
-            const kata = new Kata('Kata 1', 'Roberto Carlos'); 
             const resultado = kata.mostrar();
 
             expect(resultado).toBe('<div>Nombre kata: Kata 1, Autor: Roberto Carlos</div>');
