@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mostrarKatas, arrayKatasConMismaDificultad } from '../src/buscarPorDificultad';
 import { Kata, CatalogoKata } from '../src/katas';
 
@@ -10,10 +10,20 @@ describe('Archivo buscarPorDificultad.js', () => {
     });
     
     describe("Función mostrar katas", () => {
-        it('Existen katas dentro del catálogo', () => {
-            const kata1 = new Kata('Kata 1', 'Angelica', 'Descripcion', 'Dificultad')
-            const kata2 = new Kata('Kata 2', 'Maria', 'Descripcion', 'Dificultad')
+        let kata1;
+        let kata2;
 
+        beforeEach(() => {
+            kata1 = new Kata('Kata 1', 'Angelica', 'Descripcion', 'Dificultad')
+            kata2 = new Kata('Kata 2', 'Maria', 'Descripcion', 'Dificultad')
+        });
+
+        afterEach(() => {
+            kata1 = null;
+            kata2 = null;
+        });
+
+        it('Existen katas dentro del catálogo', () => {
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata2);
 
@@ -22,8 +32,6 @@ describe('Archivo buscarPorDificultad.js', () => {
             
             expect(mensaje).toContain('Angelica');
             expect(typeof mensaje).toEqual('string')
-            expect(mensaje).contain('<div>');
-            expect(mensaje).contain('</div>'); 
             expect(mensaje).toMatch(/^<div>.*<\/div>$/);
             expect(mensaje).toBe(resultado_esperado);
             expect(mensaje.length).toBeGreaterThan(0);
