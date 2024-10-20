@@ -516,6 +516,64 @@ describe('CatalogoKata Class', () => {
             
         });
     });
+    
+    describe('Método agregarKata', () => {
+        let kata1;
+        let kata2;
+
+        beforeEach(() => {
+            kata1 = new Kata('Kata 1', 'Rodrigo'); 
+            kata2 = new Kata('Kata 2', 'Pedro');
+        });
+
+        afterEach(() => {
+            kata1 = null;
+            kata2 = null;
+        });
+
+        it('Debería añadir una nueva kata al catalogo ordenada por orden de ingreso', () => {
+            catalogo.agregarKata(kata1)
+            let resultado = catalogo.getLista()
+
+            expect(resultado).toContain(kata1);
+            expect(resultado).toHaveLength(1);
+            expect(resultado).not.toBeUndefined();
+
+            catalogo.agregarKata(kata2);
+            resultado = catalogo.getLista();
+
+            expect(resultado).toContain(kata2);
+            expect(resultado).toHaveLength(2);
+            expect(resultado).toStrictEqual([kata1, kata2])
+            expect(resultado).not.toBeUndefined();
+        });
+    });
+    describe('Método eliminarKata', () => {
+        beforeEach(() => {
+            catalogo.listaKatas.push(kata1, kata2);
+        });
+    
+        afterEach(() => {
+            catalogo = null;
+            kata1 = null;
+            kata2 = null;
+        });
+    
+        it('debería eliminar correctamente la kata del array listaKatas', () => {
+            const pos = 0;
+    
+            expect(catalogo.listaKatas.length).toBe(2);
+            expect(catalogo.listaKatas).toContain(kata1);
+            expect(catalogo.listaKatas).toContain(kata2);
+    
+            catalogo.eliminarKata(pos);
+            
+            expect(catalogo.listaKatas.length).toBe(1);
+            expect(catalogo.listaKatas).toContain(kata2);
+            expect(catalogo.listaKatas).toMatchObject([kata2]);
+            expect(catalogo.listaKatas.length).toBeGreaterThan(0);
+        });
+    });
 })
 describe('Kata Class', ()=>{
     describe('Metodos getters', () => {
@@ -615,6 +673,92 @@ describe('Kata Class', ()=>{
             expect(resultado).not.toBeUndefined();
         });
     });
+
+    describe('Metodos setters',()=>{
+        beforeEach(() => {
+            kata = new Kata("Kata 1", "Autor A", "Descripción A", "Fácil");
+        });
+    
+        afterEach(() => {
+            kata = null;
+        });
+        it('debería actualizar correctamente el nombre de la kata', () => {
+            const nuevoNombre = "Nombre A";
+            kata.setNombre(nuevoNombre);
+            expect(typeof kata._nombre).toBe("string");
+            expect(kata).toMatchObject({ _nombre: "Nombre A" });
+        });
+        it('debería actualizar correctamente el autor de la kata', () => {
+            const nuevoAutor = "Autor A";
+            kata.setAutor(nuevoAutor);
+            expect(typeof kata._nombre).toBe("string");
+            expect(kata).toMatchObject({ _autor: "Autor A" });
+        });
+        it('debería actualizar correctamente la descripcion de la kata', () => {
+            const nuevaDescripcion = "Descripcion A";
+            kata.setDescripcion(nuevaDescripcion);
+            expect(typeof kata._nombre).toBe("string");
+            expect(kata).toMatchObject({ _descripcion: "Descripcion A" });
+        });
+        it('debería actualizar correctamente la dificultad de la kata', () => {
+            const nuevaDificultad = "Facil";
+            kata.setDificultad(nuevaDificultad);
+            expect(typeof kata._nombre).toBe("string");
+            expect(kata).toMatchObject({ _dificultad: "Facil"});
+        });
+        it('debería actualizar correctamente el id de la kata', () => {
+            const nuevoId = 1;
+            kata.setId(nuevoId);
+            expect(typeof kata._id).toBe("number");
+            expect(kata).toMatchObject({ _id: 1 });
+        });
+        it('debería actualizar la puntuación a -1 si se asigna un valor negativo', () => {
+            const puntuacionNegativa = -3;
+            kata.setPuntuacion(puntuacionNegativa);
+            expect(typeof kata._puntuacion).toBe("number");
+            expect(kata).toMatchObject({ _puntuacion: -1 });
+        });
+        it('no debería actualizar la puntuación si el valor está fuera del rango permitido', () => {
+            const puntuacionDentroDelRango = 50;
+            kata.setPuntuacion(puntuacionDentroDelRango);
+            expect(typeof kata._puntuacion).toBe("number");
+            expect(kata).toMatchObject({_puntuacion: 50 });
+        });
+        it('debería actualizar la puntuación a -1 si se asigna un valor mayor a 100', () => {
+            const puntuacionAlta = 200;
+            kata.setPuntuacion(puntuacionAlta);
+            expect(typeof kata._puntuacion).toBe("number");
+            expect(kata).toMatchObject({ _puntuacion: -1 });
+        });
+        it('debería no actualizar el estado si se asigna otro estado', () => {
+            const estado = "Anterior";
+            const resultado = kata.setEstado(estado);
+            expect(resultado).toBe(false);
+            expect(kata).toHaveProperty( '_estado', "No Terminado");
+        });
+        it('debería actualizar el estado a "No terminado" y devolver true', () => {
+            const estado = "No terminado";
+            const resultado = kata.setEstado(estado);
+            expect(resultado).toBe(true);
+            expect(kata).toHaveProperty('_estado', estado);
+        });
+        it('debería actualizar el estado a "Terminado" y devolver true', () => {
+            const estado = "Terminado";
+            const resultado = kata.setEstado(estado);
+            expect(resultado).toBe(true);
+            expect(kata).toHaveProperty('_estado', estado);
+        });
+    })
+    describe('Método mostrar', () => {
+        let kata;
+
+        beforeEach(() => {
+            kata = new Kata('Kata 1', 'Roberto Carlos'); 
+        });
+
+        afterEach(() => {
+            kata = null;
+        });
 
     describe('Método mostrar', () => {
         it('Debería mostrar el nombre de la kata y su autor entre divs', () => {

@@ -1,4 +1,4 @@
-function buscarPorDificultad(instKata, dificultad){
+export function buscarPorDificultad(instKata, dificultad){
     return instKata.getDificultad() === dificultad;
 }
 
@@ -13,4 +13,3 @@ export function mostrarKatas(listaKatas){
     }
     return mensaje;
 }
-
