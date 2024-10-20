@@ -50,14 +50,26 @@ describe('Archivo buscarPorDificultad.js', () => {
     });
 
     describe("metodo arrayKatasConMismaDificultad", () => {
-        it('deberia devolver las katas con la dificultad especificada', () => {
-            const kata1 = new Kata('Kata 1', 'Angelica', 'Descripción', 'Media');
-            const kata2 = new Kata('Kata 2', 'Maria', 'Descripción', 'Alta');    
-            const kata3 = new Kata('Kata 3', 'Pedro', 'Descripción', 'Media');   
+        let kata1;
+        let kata2;
+        let kata3;
 
+        beforeEach(() => {
+            kata1 = new Kata('Kata 1', 'Angelica', 'Descripción', 'Media');
+            kata2 = new Kata('Kata 2', 'Maria', 'Descripción', 'Alta');    
+            kata3 = new Kata('Kata 3', 'Pedro', 'Descripción', 'Media');   
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata2);
             catalogo.agregarKata(kata3);
+        });
+
+        afterEach(() => {
+            kata1 = null;
+            kata2 = null;
+            kata3 = null;
+        });
+
+        it('deberia devolver las katas con la dificultad especificada', () => {
 
             const resultado = arrayKatasConMismaDificultad(catalogo, 'Media');
             const resultadoEsperado = [kata1, kata3]; 
@@ -69,11 +81,6 @@ describe('Archivo buscarPorDificultad.js', () => {
         });
 
         it('deberia devolver una lista vacía si no hay katas con la dificultad especificada', () => {
-            const kata1 = new Kata('Kata 1', 'Angelica', 'Descripción', 'Media');
-            const kata2 = new Kata('Kata 2', 'Maria', 'Descripción', 'Alta'); 
-
-            catalogo.agregarKata(kata1);
-            catalogo.agregarKata(kata2);
 
             const resultado = arrayKatasConMismaDificultad(catalogo, 'Baja');
             const resultadoEsperado = []; 
