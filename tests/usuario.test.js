@@ -1,9 +1,17 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { Estudiante, Usuario } from "../src/usuario"
 
-describe('metodo getNombre', () => {
+describe('metodo getNombre de clase usuario', () => {
+    let usuario;
+    beforeEach(() => {
+        usuario = new Usuario('Juan', 'Descripcion');
+    });
+
+    afterEach(() => {
+        usuario = null;
+    });
     it('deberia devolver el nombre del usuario despues de instanciar la clase Usuario', () => {
-        const usuario = new Usuario('Juan', 'Descripcion');
+
         const resultado = usuario.getNombre();
 
         expect(resultado).toMatch(/^[a-zA-Z]+$/); 
@@ -15,9 +23,16 @@ describe('metodo getNombre', () => {
 
 });
 
-describe('metodo getDesc', () => {
+describe('metodo getDesc de clase usuario', () => {
+    let usuario;
+    beforeEach(() => {
+        usuario = new Usuario('Juan', 'Descripcion');
+    });
+
+    afterEach(() => {
+        usuario = null;
+    });
     it('deberia devolver la descripcion del usuario despues de instanciar la clase Usuario', () => {
-        const usuario = new Usuario('Juan', 'Descripcion');
         const resultado = usuario.getDesc();
 
         expect(resultado.length).toBeGreaterThanOrEqual(2);  

@@ -3,8 +3,13 @@ import { CatalogoKata, Kata } from '../src/katas';
 
 describe('CatalogoKata Class', () => {
     let catalogo;
+    let kata;
     let kata1;
     let kata2;
+    let kata3;
+    let kata4;
+    let kata5;
+    let kata6;
     beforeEach(() => {
         catalogo = new CatalogoKata();
     });
@@ -165,11 +170,21 @@ describe('CatalogoKata Class', () => {
     });
 
     describe('mostrarCatalogoKatas method', () => {
+        beforeEach(() => {
+            kata1 = new Kata("Kata 1", "Belen", "Descripcion Belen", "Facil");
+            kata2 = new Kata("Kata 2", "Nico", "Descripcion Nico", "Medio");
+            kata3 = new Kata("Kata 3", "Sebas", "Descripcion Sebas", "Dificil");
+        });
+        afterEach(() => {
+            catalogo.eliminarKata(0);
+            catalogo.eliminarKata(1);
+            catalogo.eliminarKata(2);
+            kata1 = null;
+            kata2 = null;
+            kata3 = null;
+        });
+        
         it('deberia mostrar mensajes concatenados cuando existen elementos en el catalogo', () => {
-            const catalogo = new CatalogoKata();
-            const kata1 = new Kata("Kata 1", "Belen", "Descripcion Belen", "Facil");
-            const kata2 = new Kata("Kata 2", "Nico", "Descripcion Nico", "Medio");
-            const kata3 = new Kata("Kata 3", "Sebas", "Descripcion Sebas", "Dificil");
             catalogo.listaKatas.push(kata1);
             catalogo.listaKatas.push(kata2);
             catalogo.listaKatas.push(kata3);
@@ -180,7 +195,7 @@ describe('CatalogoKata Class', () => {
             expect(resultado.length).toBe(expectedLength);
         });
         it('deberia mostrar vacio en caso de que no hay elementos en el catalogo', () => {
-            const catalogo = new CatalogoKata(); 
+
             const resultado = catalogo.mostrarCatalogoKatas();
             expect(resultado).toBe("");
             expect(resultado).not.toBeNull();
@@ -190,15 +205,24 @@ describe('CatalogoKata Class', () => {
     })
 
     describe('buscarPorDescripcion method', () => {
-        it('deberia devolver un array con las katas que coinciden con la descripción buscada', () => {
-            const catalogo = new CatalogoKata();
-            const kata1 = new Kata("Kata 1", "Belen", "Descripcion", "Facil");
-            const kata2 = new Kata("Kata 2", "Nico", "Descripcion", "Medio");
-            const kata3 = new Kata("Kata 3", "Sebas", "Descripcion Sebas", "Dificil");
+        beforeEach(() => {
+            kata1 = new Kata("Kata 1", "Belen", "Descripcion", "Facil");
+            kata2 = new Kata("Kata 2", "Nico", "Descripcion", "Medio");
+            kata3 = new Kata("Kata 3", "Sebas", "Descripcion Sebas", "Dificil");         
             catalogo.listaKatas.push(kata1);
-            catalogo.listaKatas.push(kata2);
             catalogo.listaKatas.push(kata3);
+        });
+        afterEach(() => {
+            catalogo.eliminarKata(0);
+            catalogo.eliminarKata(1);
+            catalogo.eliminarKata(2);
+            kata1 = null;
+            kata2 = null;
+            kata3 = null;
+        });
+        it('deberia devolver un array con las katas que coinciden con la descripción buscada', () => {
 
+            catalogo.listaKatas.push(kata2);
             const resultado = catalogo.buscarPorDescripcion("Descripcion");
             expect(resultado.length).toBe(2);
             expect(resultado).toContain(kata1);
@@ -208,13 +232,10 @@ describe('CatalogoKata Class', () => {
             });
         });
         it('deberia devolver una array con UNA kata que coincida con la descripción buscada', () => {
-            const catalogo = new CatalogoKata();
-            const kata1 = new Kata("Kata 1", "Belen", "Descripcion", "Facil");
+
+
             const kata2 = new Kata("Kata 2", "Nico", "Descripcion Nico", "Medio");
-            const kata3 = new Kata("Kata 3", "Sebas", "Descripcion Sebas", "Dificil");
-            catalogo.listaKatas.push(kata1);
             catalogo.listaKatas.push(kata2);
-            catalogo.listaKatas.push(kata3);
             
             const resultado = catalogo.buscarPorDescripcion("Descripcion");
             expect(resultado.length).toBe(1);
@@ -222,38 +243,19 @@ describe('CatalogoKata Class', () => {
             expect(resultado[0].getDescripcion()).toEqual("Descripcion");
         });
         it('deberia devolver un array vacio [] cuando la descripcion no coincida con ninguna kata', () => {
-            const catalogo = new CatalogoKata(); 
-            const kata1 = new Kata("Kata 1", "Belen", "Descripcion Sebas", "Facil");
-            const kata2 = new Kata("Kata 2", "Nico", "Descripcion Nico", "Medio");
-            const kata3 = new Kata("Kata 3", "Sebas", "Descripcion Sebas", "Dificil");
-            catalogo.listaKatas.push(kata1);
+
             catalogo.listaKatas.push(kata2);
-            catalogo.listaKatas.push(kata3);
-            
-            const resultado = catalogo.buscarPorDescripcion("Descripcion");
+            const resultado = catalogo.buscarPorDescripcion("Desc");
             expect(resultado.length).toBe(0);
             expect(resultado).toEqual([]);
         });  
     })
 
     describe('Metodo ordenarPorAutor', () => {
-        let nombreA;
-        let nombreB;
-        let nombreC;
-
-        beforeEach(() => {
-            nombreA = new Kata("Kata 1", "Angelica");
-            nombreB = new Kata("Kata 2", "Bernardo");
-            nombreC = new Kata("Kata 3", "Angelica")
-        });
-
-        afterEach(() => {
-            nombreA = null;
-            nombreB = null;
-            nombreC = null;
-        });
-
         it('nombreA es primero sobre nombreB', () => {
+            const nombreA = new Kata("Kata 1", "Angelica");
+            const nombreB = new Kata("Kata 2", "Bernardo");
+
             catalogo.agregarKata(nombreA);
             catalogo.agregarKata(nombreB);
 
@@ -266,49 +268,43 @@ describe('CatalogoKata Class', () => {
             expect(resultado).not.toBeUndefined()
         });
         it('nombreA es segundo sobre nombreB', () => {
-            catalogo.agregarKata(nombreB);
+            const nombreA = new Kata("Kata 1", "Romero");
+            const nombreB = new Kata("Kata 2", "Andres");
+
             catalogo.agregarKata(nombreA);
+            catalogo.agregarKata(nombreB);
+
+            catalogo.ordenarPorAutor();
+            const resultado = catalogo.getLista()
+
+            expect(resultado).toStrictEqual([nombreB, nombreA]);
+            expect(resultado).toContain(nombreA);
+            expect(resultado).toHaveLength(2);
+            expect(resultado).not.toBeUndefined()
+        });
+        it('nombreA es igual a nombreB', () => {
+            const nombreA = new Kata("Kata 1", "Jorge");
+            const nombreB = new Kata("Kata 2", "Jorge");
+
+            catalogo.agregarKata(nombreA);
+            catalogo.agregarKata(nombreB);
 
             catalogo.ordenarPorAutor();
             const resultado = catalogo.getLista()
 
             expect(resultado).toStrictEqual([nombreA, nombreB]);
-            expect(resultado).toContain(nombreA);
-            expect(resultado).toHaveLength(2);
-            expect(resultado).not.toBeUndefined()
-        });
-        it('nombreA es igual a nombreC', () => {
-            catalogo.agregarKata(nombreA);
-            catalogo.agregarKata(nombreC);
-
-            catalogo.ordenarPorAutor();
-            const resultado = catalogo.getLista()
-
-            expect(resultado).toStrictEqual([nombreA, nombreC]);
-            expect(resultado).toContain(nombreC);
+            expect(resultado).toContain(nombreB);
             expect(resultado).toHaveLength(2);
             expect(resultado).not.toBeUndefined()
         });
     });
 
     describe('Método clone', () => {
-        let kata1;
-        let kata2;
-        let kata3;
-
-        beforeEach(() => {
-            kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
-            kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
-            kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
-        });
-
-        afterEach(() => {
-            kata1 = null;
-            kata2 = null;
-            kata3 = null;
-        });
-
         it('entra al ciclo for', () => {
+            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
+            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata2);
             catalogo.agregarKata(kata3);
@@ -334,23 +330,11 @@ describe('CatalogoKata Class', () => {
     });
 
     describe('Metodo buscarPorNombre', () => {
-        let kata1;
-        let kata2;
-        let kata3;
-
-        beforeEach(() => {
-            kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
-            kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
-            kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
-        });
-
-        afterEach(() => {
-            kata1 = null;
-            kata2 = null;
-            kata3 = null;
-        });
-
         it('la lista de katas se encuentra con elementos y encuentra coincidencias', () => {
+            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
+            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata2);
             catalogo.agregarKata(kata3);
@@ -365,6 +349,10 @@ describe('CatalogoKata Class', () => {
             expect(resultado).not.toBeUndefined()
         });
         it('la lista de katas se encuentra con elementos y no encuentra ninguna coincidencia', () => {
+            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
+            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata2);
             catalogo.agregarKata(kata3);
@@ -379,6 +367,8 @@ describe('CatalogoKata Class', () => {
             expect(resultado).not.toBeUndefined();
         });
         it('la lista de katas se encuentra vacía', () => {
+            const catalogo_vacio = new CatalogoKata()
+
             const resultado = catalogo.buscarPorNombre('')
 
             expect(resultado).toBeTruthy();
@@ -388,16 +378,27 @@ describe('CatalogoKata Class', () => {
             expect(resultado).not.toBeUndefined();
         });
     });
+
     
     describe('Metodo ordenarPorNombre', () => {
+        beforeEach(() => {
+            kata1 = new Kata("Kata A", "Autor 1", "Descripcion 1", "Facil");
+            kata2 = new Kata("Kata B", "Autor 2", "Descripcion 2", "Medio");
+            kata3 = new Kata("Kata C", "Autor 3", "Descripcion 3", "Dificil");
+            kata4 = new Kata("Kata D", "Autor 4", "Descripcion 4", "Facil");
+        });
+        afterEach(()=>{
+            catalogo.eliminarKata(0);
+            catalogo.eliminarKata(1);
+            catalogo.eliminarKata(2);
+            catalogo.eliminarKata(3);
+            kata1 = null;
+            kata2 = null;
+            kata3 = null;
+            kata4 = null;
+        });
     
         it('deberia ordenar correctamente en orden ascendente por nombre', () => {
-            const kata1 = new Kata("Kata A", "Autor 1", "Descripcion 1", "Facil");
-            const kata2 = new Kata("Kata B", "Autor 2", "Descripcion 2", "Medio");
-            const kata3 = new Kata("Kata C", "Autor 3", "Descripcion 3", "Dificil");
-            const kata4 = new Kata("Kata D", "Autor 4", "Descripcion 4", "Facil");
-            
-            catalogo = new CatalogoKata();
             catalogo.agregarKata(kata2);
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata3);
@@ -414,12 +415,12 @@ describe('CatalogoKata Class', () => {
         });
         
         it('deberia mantener el mismo orden cuando los nombres son iguales', () => {
-            const kata1 = new Kata("Kata A", "Autor 1", "Descripcion 1", "Facil");
-            const kata2 = new Kata("Kata A", "Autor 2", "Descripcion 2", "Medio");
-            const kata3 = new Kata("Kata A", "Autor 3", "Descripcion 3", "Dificil");
-            const kata4 = new Kata("Kata A", "Autor 4", "Descripcion 4", "Facil");
-            
-            catalogo = new CatalogoKata();
+
+            kata1 = new Kata("Kata A", "Autor 1", "Descripcion 1", "Facil");
+            kata2 = new Kata("Kata A", "Autor 2", "Descripcion 2", "Medio");
+            kata3 = new Kata("Kata A", "Autor 3", "Descripcion 3", "Dificil");
+            kata4 = new Kata("Kata A", "Autor 4", "Descripcion 4", "Facil");
+
             catalogo.agregarKata(kata2);
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata3);
@@ -436,22 +437,16 @@ describe('CatalogoKata Class', () => {
         });
     
         it('debería ordenar correctamente en orden ascendente cuando el primer nombre es mayor que el segundo', () => {
-            const kata1 = new Kata("Kata D", "Autor 1", "Descripcion 1", "Fácil");
-            const kata2 = new Kata("Kata C", "Autor 2", "Descripcion 2", "Medio");
-            const kata3 = new Kata("Kata B", "Autor 3", "Descripcion 3", "Dificil");
-            const kata4 = new Kata("Kata A", "Autor 4", "Descripcion 4", "Facil");
             
-            catalogo = new CatalogoKata();
-            
-            catalogo.agregarKata(kata1);
-            catalogo.agregarKata(kata2);
-            catalogo.agregarKata(kata3);
             catalogo.agregarKata(kata4);
+            catalogo.agregarKata(kata3);
+            catalogo.agregarKata(kata2);
+            catalogo.agregarKata(kata1);
     
             catalogo.ordenarPorNombre();
             
             const listaOrdenada = catalogo.getLista();
-            expect(listaOrdenada).toStrictEqual([kata4, kata3, kata2, kata1]);
+            expect(listaOrdenada).toStrictEqual([kata1, kata2, kata3, kata4]);
             expect(listaOrdenada[0].getNombre()).toBe("Kata A");
             expect(listaOrdenada[1].getNombre()).toBe("Kata B");
             expect(listaOrdenada[2].getNombre()).toBe("Kata C");
@@ -460,16 +455,14 @@ describe('CatalogoKata Class', () => {
     });
 
     describe('Metodo getLista', () => {
-        it('deberia retornar la lista completa de katas', () => {
-            const kata = new Kata('Kata 0', 'Autor', 'Descripcion', 'Dificultad');
-            const kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
-            const kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
-            const kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
-            const kata4 = new Kata('Kata 4', 'Autor', 'Descripcion', 'Dificultad');
-            const kata5 = new Kata('Kata 5', 'Autor', 'Descripcion', 'Dificultad');
-            const kata6 = new Kata('Kata 6', 'Autor', 'Descripcion', 'Dificultad');
-            
-            catalogo = new CatalogoKata();
+        beforeEach(() => {
+            kata = new Kata('Kata 0', 'Autor', 'Descripcion', 'Dificultad');
+            kata1 = new Kata('Kata 1', 'Autor', 'Descripcion', 'Dificultad');
+            kata2 = new Kata('Kata 2', 'Autor', 'Descripcion', 'Dificultad');
+            kata3 = new Kata('Kata 3', 'Autor', 'Descripcion', 'Dificultad');
+            kata4 = new Kata('Kata 4', 'Autor', 'Descripcion', 'Dificultad');
+            kata5 = new Kata('Kata 5', 'Autor', 'Descripcion', 'Dificultad');
+            kata6 = new Kata('Kata 6', 'Autor', 'Descripcion', 'Dificultad');
             catalogo.agregarKata(kata);
             catalogo.agregarKata(kata1);
             catalogo.agregarKata(kata2);
@@ -477,11 +470,28 @@ describe('CatalogoKata Class', () => {
             catalogo.agregarKata(kata4);
             catalogo.agregarKata(kata5);
             catalogo.agregarKata(kata6);
-
+        });
+        afterEach(()=>{
+            catalogo.eliminarKata(0);
+            catalogo.eliminarKata(1);
+            catalogo.eliminarKata(2);
+            catalogo.eliminarKata(3);
+            catalogo.eliminarKata(4);
+            catalogo.eliminarKata(5);
+            catalogo.eliminarKata(6);
+            kata1 = null;
+            kata2 = null;
+            kata3 = null;
+            kata4 = null;
+            kata5 = null;
+            kata6 = null;
+            kata = null;
+        });
+        it('deberia retornar la lista completa de katas', () => {
+            
             const listaKatas = catalogo.getLista();
             expect(listaKatas).toHaveLength(7); 
             expect(listaKatas).toEqual(expect.arrayContaining([kata, kata1, kata2, kata3, kata4, kata5, kata6]));
-
         });
     });
 
@@ -506,60 +516,11 @@ describe('CatalogoKata Class', () => {
             
         });
     });
-    
-    describe('Método agregarKata', () => {
-        let kata1;
-        let kata2;
-
-        beforeEach(() => {
-            kata1 = new Kata('Kata 1', 'Rodrigo'); 
-            kata2 = new Kata('Kata 2', 'Pedro');
-        });
-
-        afterEach(() => {
-            kata1 = null;
-            kata2 = null;
-        });
-
-        it('Debería añadir una nueva kata al catalogo ordenada por orden de ingreso', () => {
-            catalogo.agregarKata(kata1)
-            let resultado = catalogo.getLista()
-
-            expect(resultado).toContain(kata1);
-            expect(resultado).toHaveLength(1);
-            expect(resultado).not.toBeUndefined();
-
-            catalogo.agregarKata(kata2);
-            resultado = catalogo.getLista();
-
-            expect(resultado).toContain(kata2);
-            expect(resultado).toHaveLength(2);
-            expect(resultado).toStrictEqual([kata1, kata2])
-            expect(resultado).not.toBeUndefined();
-        });
-    });
 })
 describe('Kata Class', ()=>{
-    let kata;
-    beforeEach(() => {
-        kata = new Kata("Kata 1", "Autor A", "Descripción A", "Fácil");
-    });
-
-    afterEach(() => {
-        kata = null;
-    });
     describe('Metodos getters', () => {
-        let kata;
-
-        beforeEach(() => {
-            kata = new Kata('Nombre de Kata', 'Jose Carlos', 'Esta es una descripcion', 'Media', 78);
-        });
-
-        afterEach(() => {
-            kata = null;
-        });
-
         it('deberia devolver el nombre de la kata', () => {
+            const kata = new Kata('Nombre de Kata');
             const resultado = kata.getNombre();
     
             expect(typeof resultado).toBe('string');
@@ -571,6 +532,7 @@ describe('Kata Class', ()=>{
         });
 
         it('deberia devolver el nombre del autor de la kata', () => {
+            const kata = new Kata('kata', 'Jose Carlos');
             const resultado = kata.getAutor();
     
             expect(typeof resultado).toBe('string');
@@ -582,6 +544,7 @@ describe('Kata Class', ()=>{
         });
     
         it('deberia devolver la descripcion de la kata', () => {
+            const kata = new Kata('kata', 'autor', 'Esta es una descripcion');
             const resultado = kata.getDescripcion();
 
             expect(typeof resultado).toBe('string');
@@ -593,6 +556,7 @@ describe('Kata Class', ()=>{
         });
 
         it('deberia devolver una descripcion corta de la kata', () => {
+            const kata = new Kata('kata', 'Jose Carlos', 'Esta es una descripcion larga que debe ser resumida');
             const resultado = kata.getDescCorta();
     
             expect(typeof resultado).toBe('string');
@@ -604,6 +568,7 @@ describe('Kata Class', ()=>{
         });
 
         it('deberia devolver la dificultad de la kata', () => {
+            const kata = new Kata('kata', 'Jose Carlos', 'descripcion', 'Media');
             const resultado = kata.getDificultad();
     
             expect(typeof resultado).toBe('string');
@@ -615,6 +580,7 @@ describe('Kata Class', ()=>{
         });
 
         it('deberia devolver el id de la Kata cuando no se encuentra en un catalogo', () => {
+            const kata = new Kata('kata');
             const resultado = kata.getId();
     
             expect(typeof resultado).toBe('number');
@@ -626,6 +592,7 @@ describe('Kata Class', ()=>{
         });
 
         it('deberia devolver la puntuacion Kata', () => {
+            const kata = new Kata('kata', 'Jose Carlos', 'descripcion', 'Media', 78);
             const resultado = kata.getPuntuacion();
     
             expect(typeof resultado).toBe('number');
@@ -638,6 +605,7 @@ describe('Kata Class', ()=>{
         });
 
         it('deberia devolver el estado de una Kata recien creada', () => {
+            const kata = new Kata('kata');
             const resultado = kata.getEstado();
     
             expect(typeof resultado).toBe('string');
@@ -647,57 +615,10 @@ describe('Kata Class', ()=>{
             expect(resultado).not.toBeUndefined();
         });
     });
-    describe('Metodos setters',()=>{
-        beforeEach(() => {
-            kata = new Kata("Kata 1", "Autor A", "Descripción A", "Fácil");
-        });
-    
-        afterEach(() => {
-            kata = null;
-        });
-        it('debería actualizar correctamente el nombre de la kata', () => {
-            const nuevoNombre = "Nombre A";
-            kata.setNombre(nuevoNombre);
-            expect(typeof kata._nombre).toBe("string");
-            expect(kata).toMatchObject({ _nombre: "Nombre A" });
-        });
-        it('debería actualizar correctamente el autor de la kata', () => {
-            const nuevoAutor = "Autor A";
-            kata.setAutor(nuevoAutor);
-            expect(typeof kata._nombre).toBe("string");
-            expect(kata).toMatchObject({ _autor: "Autor A" });
-        });
-        it('debería actualizar correctamente la descripcion de la kata', () => {
-            const nuevaDescripcion = "Descripcion A";
-            kata.setDescripcion(nuevaDescripcion);
-            expect(typeof kata._nombre).toBe("string");
-            expect(kata).toMatchObject({ _descripcion: "Descripcion A" });
-        });
-        it('debería actualizar correctamente la dificultad de la kata', () => {
-            const nuevaDificultad = "Facil";
-            kata.setDificultad(nuevaDificultad);
-            expect(typeof kata._nombre).toBe("string");
-            expect(kata).toMatchObject({ _dificultad: "Facil"});
-        });
-        it('debería actualizar correctamente el id de la kata', () => {
-            const nuevoId = 1;
-            kata.setId(nuevoId);
-            expect(typeof kata._id).toBe("number");
-            expect(kata).toMatchObject({ _id: 1 });
-        });
-    })
+
     describe('Método mostrar', () => {
-        let kata;
-
-        beforeEach(() => {
-            kata = new Kata('Kata 1', 'Roberto Carlos'); 
-        });
-
-        afterEach(() => {
-            kata = null;
-        });
-
         it('Debería mostrar el nombre de la kata y su autor entre divs', () => {
+            const kata = new Kata('Kata 1', 'Roberto Carlos'); 
             const resultado = kata.mostrar();
 
             expect(resultado).toBe('<div>Nombre kata: Kata 1, Autor: Roberto Carlos</div>');
@@ -711,21 +632,29 @@ describe('Kata Class', ()=>{
     });
 
     describe('Método mostrarPuntuacion', () => {
+        let kata;
+        beforeEach(() => {
+            kata = new Kata();
+        });
+
+        afterEach(() => {
+            kata = null;
+        });
+
         it('deberia retornar la puntuacion ingresada previamente', () => {
-            const kata = new Kata();
             kata.setPuntuacion(5); 
-            
+
             const resultado = kata.mostrarPuntuacion();
             expect(resultado).toBe(5); 
             expect(typeof resultado).toBe("number");
+
         });
         it('deberia retornar "Sin calificar" en caso de que no se le asigne ninguna puntuacion(osea puntuacion sea igual a -1)', () => {
-            const kata = new Kata(); 
-            
             expect(kata.getPuntuacion()).toBe(-1);
             expect(typeof kata.getPuntuacion()).toBe("number");
             expect(kata.mostrarPuntuacion()).toBe("Sin calificar");
             expect(typeof kata.mostrarPuntuacion()).toBe("string");
+            
         });
     });
     
